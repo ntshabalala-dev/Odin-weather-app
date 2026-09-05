@@ -202,3 +202,14 @@ footer {
     transform: rotate(360deg);
     transition: transform 0.5s ease-in-out;
 }
+
+/* ##02 - LOCATION */
+#location__name {
+    font-size: 3.7rem;
+    font-weight: bold;
+}
+
+#location {
+    /* possibly add gap to parent div */
+    margin-top: 1rem;
+}
