@@ -213,3 +213,38 @@ footer {
     /* possibly add gap to parent div */
     margin-top: 1rem;
 }
+
+/* ##03 - WEATHER OVERVIEW */
+#weather-overview {
+    display: flex;
+}
+
+.weather-overview__temperature {
+    display: flex;
+    gap: 4px;
+    align-items: last baseline;
+}
+
+#temperature-details {
+    display: flex;
+    flex-direction: column;
+}
+
+#temperature-amount {
+    font-size: 8rem;
+    font-weight: bold;
+}
+
+#temperature-details #description {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+#metric span {
+    font-size: 1.5rem;
+}
+
+#metric .selected {
+    font-weight: 700;
+}
