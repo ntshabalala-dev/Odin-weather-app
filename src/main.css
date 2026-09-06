@@ -47,7 +47,7 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
     padding: 1rem 2rem;
     background-color: #f5f5f5;
 }
@@ -217,12 +217,39 @@ footer {
 /* ##03 - WEATHER OVERVIEW */
 #weather-overview {
     display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
 }
 
 .weather-overview__temperature {
     display: flex;
     gap: 4px;
     align-items: last baseline;
+}
+
+.weather-overview__extra-info {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+#weather-extra-details>span {
+    display: flex;
+    align-items: center;
+}
+
+#weather-extra-details>span>.text {
+    font-weight: 700;
+}
+
+#weather-extra-details {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /* flex-direction: column; */
 }
 
 #temperature-details {
@@ -247,4 +274,9 @@ footer {
 
 #metric .selected {
     font-weight: 700;
+}
+
+#weather-extra-details>span>img {
+    width: 20px;
+    height: 20px;
 }
