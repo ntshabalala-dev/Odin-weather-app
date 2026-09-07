@@ -16,6 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
+    /* align-items: ; */
 
     /* background: center / cover no-repeat fixed;
     background-image: url('./Assets/bg/3.jpg'); */
@@ -27,22 +28,6 @@ body {
     /* background-image:
         linear-gradient(rgba(13, 7, 7, 0.084), rgba(0, 0, 0, 0.5)),
         url('./Assets/bg/3.jpg'); */
-
-
-    /* 1. Choose the image file path */
-    background-image: url('./Assets/bg/3.jpg');
-
-    /* 2. Stop the image from repeating like a tile grid */
-    background-repeat: no-repeat;
-
-    /* 3. Center the image on the screen */
-    background-position: center;
-
-    /* 4. Stretch the image to perfectly fit the whole screen */
-    background-size: cover;
-
-    /* 5. Keep the background in place while scrolling */
-    background-attachment: fixed;
 }
 
 header {
@@ -54,7 +39,6 @@ header {
     background-color: #000000;
     color: #fff;
     border: 1px solid #000000;
-
     position: sticky;
     top: 0;
     /* Tells it exactly where to snap tightly at the top */
@@ -68,7 +52,7 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 1rem 2rem;
-
+    background-color: #f5f5f5;
 }
 
 footer {
@@ -298,6 +282,15 @@ footer {
 #weather-extra-details>span>img {
     width: 20px;
     height: 20px;
+    margin-right: 2px;
+}
+
+#weather-extra-details>span>img :not(#weather-feels-like img) {
+    margin-right: 2px;
+}
+
+#weather-extra-details .value {
+    padding-left: 2px
 }
 
 /* ##004 - WEATHER FORECAST */
@@ -409,6 +402,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* font-size: 1.1; */
 }
 
 .hourly-forecast__card {
@@ -445,5 +439,85 @@ footer {
 .hourly-forecast__card #wind,
 .hourly-forecast__card #feels-like {
     visibility: hidden;
-    /* display: none; */
+}
+
+.hourly-forecast__card #description {
+    display: none;
+}
+
+.temperature #max {
+    font-weight: 700;
+}
+
+/* MEDIA QUERIES */
+
+@media (min-width:765px) {
+
+    .hourly-forecast__card #wind,
+    .hourly-forecast__card #feels-like {
+        visibility: visible;
+    }
+
+    .hourly-forecast__card #description {
+        display: inline-flex;
+    }
+
+    .hourly-forecast__card .icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hourly-forecast__card {
+        padding-inline: 2rem;
+    }
+
+    #hourly-forecast__body {
+        font-size: 1.1rem;
+    }
+
+    main {
+        width: 100%;
+        max-width: 1200px;
+        /* Adjust this value as needed */
+        margin: 0 auto;
+        /* Centers the div on the page */
+    }
+
+    #weather-overview {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #weather-extra-details>span:nth-child(4),
+    #weather-extra-details>span:nth-child(2) {
+        display: none;
+    }
+
+    #weather-extra-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 1.3rem;
+        align-self: flex-end;
+    }
+
+    .weather-overview__extra-info {
+        flex-direction: row;
+
+    }
+
+    #weather-extra-details>span>img {
+        width: 24px;
+        height: auto;
+        margin-right: 5px;
+    }
+
+    #temperature-amount #value {
+        display: inline-block;
+        font-size: 10rem;
+        /* height: 0; */
+    }
+
 }
