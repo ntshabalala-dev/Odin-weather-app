@@ -73,10 +73,10 @@
                         <span id="weather-feels-like__value value">23°</span>
                     </span>
                     <span class="vertical-splitor">&#10072;</span>
-                    <span id="weather-humidity">
+                    <span id="weather-precipitation">
                         <img src="./Assets/weather_details/humidity.svg" alt="">
-                        <span class="text">Humidity:</span>
-                        <span id="weather-humidity__value value"></span>
+                        <span class="text">Precipitation:</span>
+                        <span id="weather-precipitation__value value"></span>
                     </span>
                     <span class="vertical-splitor">&#10072;</span>
                     <span id="weather-wind">
@@ -88,28 +88,48 @@
             </div>
         </div>
 
-        <div class="weather-forecast" id="weather-forecast">
-            <div class="weather-forecast__day">
-                <span class="weather-forecast__day">Monday</span>
-                <img class="weather-forecast__icon" src="./Assets/weather_icons/cloudy.svg" alt="">
-                <span class="weather-forecast__temperature">
-                    <span id="max">23°</span>&#8210;<span id="min">12°</span>
-                </span>
-                <span class="weather-forecast__description">Overcast clouds</span>
+        <div class="weather-forecast">
+            <div id="weather-forecast__heading">
+                7-day Forecast
             </div>
-            <div class="weather-forecast__day">
-                <span class="weather-forecast__day">Tuesday</span>
-                <img class="weather-forecast__icon" src="./Assets/weather_icons/cloudy.svg" alt="">
-                <span class="weather-forecast__temperature">
-                    <span id="max">23°</span>&#8210;<span id="min">12°</span>
-                </span>
-                <span class="weather-forecast__description">Overcast clouds</span>
+
+            <div class="weather-forecast__container" id="weather-forecast__container">
+                <div class="weather-forecast__card">
+                    <span class="weather-forecast__text">Monday</span>
+                    <img class="weather-forecast__icon" src="./Assets/weather_icons/cloudy.svg" alt="">
+                    <span class="weather-forecast__temperature">
+                        <span id="max">23°</span>&#8210;<span id="min">12°</span>
+                    </span>
+                    <span class="weather-forecast__description">Overcast clouds</span>
+                    <span class="weather-forecast__precipitation">
+                        <img src="./Assets/weather_details/humidity.svg" alt="">
+                        <span id="weather-precipitation__value value">12%</span>
+                    </span>
+                </div>
+
+                <div class="weather-forecast__card">
+                    <span class="weather-forecast__text">Tuesday</span>
+                    <img class="weather-forecast__icon" src="./Assets/weather_icons/cloudy.svg" alt="">
+                    <span class="weather-forecast__temperature">
+                        <span id="max">23°</span>&#8210;<span id="min">12°</span>
+                    </span>
+                    <span class="weather-forecast__description">Overcast clouds</span>
+                    <span class="weather-forecast__precipitation">
+                        <img src="./Assets/weather_details/humidity.svg" alt="">
+                        <span id="weather-precipitation__value value">50%</span>
+                    </span>
+                </div>
+
+                <div class="weather-forecast__card"></div>
+                <div class="weather-forecast__card"></div>
+                <div class="weather-forecast__card"></div>
+                <div class="weather-forecast__card"></div>
+                <div class="weather-forecast__card"></div>
             </div>
-            <div class="weather-forecast__day"></div>
-            <div class="weather-forecast__day"></div>
-            <div class="weather-forecast__day"></div>
-            <div class="weather-forecast__day"></div>
-            <div class="weather-forecast__day"></div>
+        </div>
+
+        <div class="hourly-forecast" id="hourly-forecast">
+
         </div>
 
     </main>
