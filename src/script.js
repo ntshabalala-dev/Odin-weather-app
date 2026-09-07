@@ -1,35 +1,36 @@
 import "../src/main.css";
 
+// import "./Assets/bg/3.jpg";
+
 // Grab the button and the menu from the HTML
-const hamburger = document.getElementById('hamburger-btn');
-const navMenu = document.getElementById('nav-menu');
-const navClose = document.getElementById('nav-menu__close');
+const hamburger = document.getElementById("hamburger-btn");
+const navMenu = document.getElementById("nav-menu");
+const navClose = document.getElementById("nav-menu__close");
 
 // Listen for a click on the hamburger button
-hamburger.addEventListener('click', () => {
+hamburger.addEventListener("click", () => {
     // Toggle means: if the class is there, remove it. If it's not, add it.
-    navMenu.classList.toggle('active');
+    navMenu.classList.toggle("active");
 });
 
 // Listen for a click on the close button
-navClose.addEventListener('click', () => {
+navClose.addEventListener("click", () => {
     // Remove the active class to hide the menu
-    navMenu.classList.remove('active');
+    navMenu.classList.remove("active");
 });
-
 
 // Visual Crossing Timeline Weather API example
 // Fetches timeline data for a location using metric units, with output in JSON format
 // Filters for windspeed, description, and icon weather elements
 
-const API_KEY = '';
-const LOCATION = 'Berlin,Germany'; // Change to your desired location
-const UNIT_GROUP = 'metric';
-const INCLUDE = 'days,hours';
-const CONTENT_TYPE = 'json';
+const API_KEY = "";
+const LOCATION = "Berlin,Germany"; // Change to your desired location
+const UNIT_GROUP = "metric";
+const INCLUDE = "days,hours";
+const CONTENT_TYPE = "json";
 
 // Get today's date in YYYY-MM-DD format
-const today = new Date().toISOString().split('T')[0];
+const today = new Date().toISOString().split("T")[0];
 // Build the base URL
 const baseUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(LOCATION)}/${today}`;
 // Build query parameters
@@ -37,7 +38,7 @@ const params = new URLSearchParams({
     key: API_KEY,
     unitGroup: UNIT_GROUP,
     include: INCLUDE,
-    contentType: CONTENT_TYPE
+    contentType: CONTENT_TYPE,
 });
 const url = `${baseUrl}?${params.toString()}`;
 
@@ -47,7 +48,9 @@ async function fetchTimelineWeather() {
         if (!response.ok) {
             // Read and print response body for debugging
             const errorBody = await response.text();
-            throw new Error(`Weather API request failed (${response.status}): ${errorBody}`);
+            throw new Error(
+                `Weather API request failed (${response.status}): ${errorBody}`,
+            );
         }
         const data = await response.json();
         // Print the relevant portion of the returned data
