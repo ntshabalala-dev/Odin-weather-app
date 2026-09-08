@@ -1,4 +1,5 @@
 import "../src/main.css";
+import { format } from 'date-fns';
 
 // import "./Assets/bg/3.jpg";
 
@@ -23,8 +24,8 @@ navClose.addEventListener("click", () => {
 // Fetches timeline data for a location using metric units, with output in JSON format
 // Filters for windspeed, description, and icon weather elements
 
-const API_KEY = "";
-const LOCATION = "Berlin,Germany"; // Change to your desired location
+const API_KEY = "F2BLC7NXZZJ47C73JDURCMN5N";
+const LOCATION = "Toronto"; // Change to your desired location
 const UNIT_GROUP = "metric";
 const INCLUDE = "days,hours";
 const CONTENT_TYPE = "json";
@@ -67,3 +68,9 @@ async function fetchTimelineWeather() {
 }
 
 fetchTimelineWeather();
+
+
+const now = new Date();
+const finalString = format(now, "EEEE, d MMMM yyyy '|' hh:mm a");
+
+console.log(finalString);
