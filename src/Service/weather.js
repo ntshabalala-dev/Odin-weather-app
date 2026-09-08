@@ -1,4 +1,8 @@
 export default async function fetchTimelineWeather(location) {
+    // Visual Crossing Timeline Weather API example
+    // Fetches timeline data for a location using metric units, with output in JSON format
+    // Filters for windspeed, description, and icon weather elements
+
     const API_KEY = "F2BLC7NXZZJ47C73JDURCMN5N";
     const LOCATION = location; // Change to your desired location
     const UNIT_GROUP = "metric";
