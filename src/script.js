@@ -5,15 +5,18 @@ import registerHamburgerMenuButtons from "./Modules/hamburgerMenu.js";
 import { generateWeatherForecast, initSearchForm } from "./Modules/search.js";
 
 async function onLoad() {
+    // Search needs to set the time as well
     const date = document.querySelector('#location__date-time #date');
     const time = document.querySelector('#location__date-time #time');
     date.textContent = dateTime.date
     time.textContent = dateTime.time
 
-    await generateWeatherForecast('Klerksdorp')
+    await generateWeatherForecast('Toronto')
+
+    document.querySelectorAll('.is-loading').forEach(element => {
+        element.classList.toggle('is-loading')
+    });
 }
-
-
 
 document.addEventListener("DOMContentLoaded", async () => {
     const log = console.log

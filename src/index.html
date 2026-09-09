@@ -44,7 +44,7 @@
         </div>
 
         <div class="location" id="location">
-            <div id="location__name">Toronto</div>
+            <div id="location__name" class="location__name is-loading">Toronto</div>
             <div id="location__date-time">
                 <span id="date">Tuesday, 8 September 2026</span>
                 <span>&#124;</span>
@@ -55,39 +55,39 @@
 
         <div class="weather-overview" id="weather-overview">
             <div class="weather-overview__temperature">
-                <div id="temperature-amount">
+                <div id="temperature-amount" class="temperature-amount is-loading">
                     <span id="value">15</span>
                 </div>
                 <div id="temperature-details">
                     <span id="metric">
                         <span id="celsius" class="selected">&deg;C</span>|<span id="fahrenheit">&deg;F</span>
                     </span>
-                    <span id="description">
+                    <span class="description is-loading" id="description">
                         Partly cloudy
                     </span>
                 </div>
             </div>
             <div class="weather-overview__extra-info">
-                <div id="weather-icon">
+                <div id="weather-icon" class="weather-icon is-loading">
                     <img src="./Assets/weather_icons/foggy.svg" style="width: 200px; height: auto;" alt="">
                 </div>
                 <div id="weather-extra-details">
                     <span id="weather-feels-like">
                         <img src="./Assets/air_conditions/Temperature.svg" alt="">
                         <span class="text">Feels like:</span>
-                        <span id="weather-feels-like__value" class="value">23°</span>
+                        <span id="weather-feels-like__value" class="value is-loading">23°</span>
                     </span>
                     <span class="vertical-splitor">&#10072;</span>
                     <span id="weather-precipitation">
                         <img src="./Assets/air_conditions/Rain.svg" alt="">
                         <span class="text">Precipitation:</span>
-                        <span id="weather-precipitation__value" class="value"></span>
+                        <span id="weather-precipitation__value" class="value is-loading">40%</span>
                     </span>
                     <span class="vertical-splitor">&#10072;</span>
                     <span id="weather-wind">
                         <img src="./Assets/air_conditions/Wind.svg" alt="">
                         <span class="text">Wind:</span>
-                        <span id="weather-wind__value" class="value"></span>
+                        <span id="weather-wind__value" class="value is-loading">10km/h</span>
                     </span>
                 </div>
             </div>
@@ -146,7 +146,7 @@
 
             </div>
             <div id="hourly-forecast__body">
-                <div class="hourly-forecast__card">
+                <div class="hourly-forecast__card is-loading">
                     <!-- <div class="half"> -->
                     <span class="hour">18:00</span>
                     <span class="icon">

@@ -239,6 +239,9 @@ footer {
     display: flex;
     gap: 4px;
     align-items: last baseline;
+    /* padding-block: 2rem; */
+    padding-top: 2rem;
+    padding-bottom: 1.6rem;
 }
 
 .weather-overview__extra-info {
@@ -273,6 +276,7 @@ footer {
 #temperature-amount {
     font-size: 8rem;
     font-weight: bold;
+    line-height: 0.7;
 }
 
 #temperature-details #description {
@@ -281,7 +285,7 @@ footer {
     text-transform: capitalize;
 
     /* change on large screens! */
-    width: 200px;
+    max-width: 200px;
     /* 2. Sets a limit where the text should cut off */
     white-space: wrap;
 }
@@ -342,12 +346,6 @@ footer {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.weather-forecast__card img {
-    padding: 10px;
-    width: 100px;
-    height: 100px;
-}
-
 .weather-forecast__temperature {
     margin-bottom: 7px;
 }
@@ -382,6 +380,12 @@ footer {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.weather-forecast__card>img {
+    padding: 10px;
+    width: 100px;
+    height: 100px;
 }
 
 .weather-forecast__precipitation img {
@@ -493,6 +497,46 @@ footer {
     }
 } */
 
+/* When .is-loading is present, convert ALL text elements into skeletons */
+
+.description.is-loading,
+.weather-icon.is-loading,
+.value.is-loading,
+.location__name.is-loading,
+.temperature-amount.is-loading {
+    min-height: auto;
+    width: fit-content;
+}
+
+.weather-icon.is-loading img {
+    visibility: hidden;
+}
+
+
+.description.is-loading,
+.weather-icon.is-loading,
+.value.is-loading,
+.location__name.is-loading,
+.temperature-amount.is-loading {
+    border-radius: 4px;
+    background-color: #e2e8f0;
+    color: transparent !important;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
 /* MEDIA QUERIES */
 
 @media (min-width:765px) {
@@ -530,7 +574,7 @@ footer {
     }
 
     #weather-overview {
-        margin-top: 1rem;
+        margin-block: 1.7rem;
         width: 100%;
         justify-content: space-between;
     }
@@ -550,6 +594,7 @@ footer {
 
     .weather-overview__extra-info {
         flex-direction: row;
+        /* align-self: flex-end; */
 
     }
 
@@ -610,6 +655,16 @@ footer {
 
     #weather-forecast__heading {
         margin-bottom: 8px;
+    }
+
+    #weather-icon {
+        /* padding-top: 120px; */
+        align-self: flex-end;
+    }
+
+    .weather-overview__temperature {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 
