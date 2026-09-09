@@ -27,6 +27,7 @@ export default async function fetchTimelineWeather(location) {
         if (!response.ok) {
             // Read and print response body for debugging
             const errorBody = await response.text();
+
             throw new Error(
                 `Weather API request failed (${response.status}): ${errorBody}`,
             );
