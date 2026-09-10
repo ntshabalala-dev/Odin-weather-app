@@ -1,5 +1,5 @@
 import "../src/main.css";
-import setDateTime from "./Helpers/getDateAndTime.js";
+import { setDateTime } from "./Helpers/getDateAndTime.js";
 import getIconMapping from "./Helpers/getIconMapping.js";
 import registerHamburgerMenuButtons from "./Modules/hamburgerMenu.js";
 import { generateWeatherForecast, initSearchForm } from "./Modules/search.js";
@@ -7,7 +7,7 @@ import { generateWeatherForecast, initSearchForm } from "./Modules/search.js";
 async function onLoad() {
     setDateTime()
 
-    await generateWeatherForecast('Toronto')
+    await generateWeatherForecast('Klerksdorp')
 
     document.querySelectorAll('.is-loading').forEach(element => {
         element.classList.toggle('is-loading')

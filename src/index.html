@@ -249,36 +249,36 @@
                     Hourly Forecast
                 </span>
 
-                <select name="days" id="">
+                <select name="days" id="" class="is-loading">
                     <option value="Tuesday">Tuesday</option>
                 </select>
 
             </div>
             <div id="hourly-forecast__body">
-                <div class="hourly-forecast__card is-loading">
+                <div class="hourly-forecast__card">
                     <!-- <div class="half"> -->
-                    <span class="hour">18:00</span>
-                    <span class="icon">
-                        <img src="./Assets/weather_icons/partlycloudy.svg" alt="">
+                    <span class="hour is-loading">18:00</span>
+                    <span class="icon is-loading">
+                        <img class="hourly-forecast__icon" src="./Assets/weather_icons/partlycloudy.svg" alt="">
                         <span id="description">Partly cloudy</span>
                     </span>
-                    <span class="temperature">
+                    <span class="temperature is-loading">
                         <span id="max">23°</span>&#47;<span id="min">12°</span>
                     </span>
                     <!-- </div> -->
                     <span id="feels-like">
                         <img src="./Assets/air_conditions/Temperature.svg" alt="">
-                        <span id="feels-like__value value">23°</span>
+                        <span class="is-loading" id="feels-like__value value">23°</span>
                     </span>
                     <!--  -->
                     <span id="wind">
                         <img src="./Assets/air_conditions/Wind.svg" alt="">
-                        <span id="weather-wind__value value">10km/h</span>
+                        <span class="is-loading" id="weather-wind__value value">10km/h</span>
                     </span>
                     <!--  -->
                     <span id="precipitation">
                         <img src="./Assets/air_conditions/Rain.svg" alt="">
-                        <span id="precipitation__value value">40%</span>
+                        <span class="is-loading" id="precipitation__value value">40%</span>
                     </span>
 
                 </div>

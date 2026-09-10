@@ -10,9 +10,9 @@ export default async function fetchTimelineWeather(location) {
     const CONTENT_TYPE = "json";
 
     // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().split("T")[0];
+    const startDate = "next6days";
     // Build the base URL
-    const baseUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(LOCATION)}/${today}`;
+    const baseUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(LOCATION)}/${startDate}`;
     // Build query parameters
     const params = new URLSearchParams({
         key: API_KEY,

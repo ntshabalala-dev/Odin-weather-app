@@ -1,4 +1,4 @@
-import setDateTime from "../Helpers/getDateAndTime.js";
+import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import fetchTimelineWeather from "../Service/weather.js";
 
@@ -39,6 +39,9 @@ async function generateWeatherForecastView(data) {
     // 7 DAY FORECAST
 
     // HOURLY FORECAST
+    data.days.forEach(day => {
+        console.log(getDayOfTheWeek(day.datetime));
+    });
 }
 
 async function loadDynamicImage(iconMpapping, selector) {

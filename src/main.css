@@ -509,21 +509,11 @@ footer {
     
 } */
 
-.weather-icon.is-loading img,
-.weather-forecast__icon.is-loading img {
+.is-loading img {
     visibility: hidden;
 }
 
-.weather-forecast__icon.is-loading,
-.weather-precipitation.is-loading,
-.weather-forecast__description.is-loading,
-.weather-forecast__temperature.is-loading,
-.weather-forecast__text.is-loading,
-.description.is-loading,
-.weather-icon.is-loading,
-.value.is-loading,
-.location__name.is-loading,
-.temperature-amount.is-loading {
+.is-loading {
     min-height: auto;
     width: fit-content;
     border-radius: 4px;
