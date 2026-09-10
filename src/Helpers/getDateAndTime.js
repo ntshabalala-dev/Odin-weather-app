@@ -6,8 +6,6 @@ export default function setDateTime() {
     const date = document.querySelector("#location__date-time #date");
     const time = document.querySelector("#location__date-time #time");
 
-    // console.log(dateTime.time);
-
     date.textContent = format(now, "EEEE, d MMMM yyyy");
     time.textContent = format(now, "hh:mm a");
 }
