@@ -14,13 +14,19 @@ async function generateWeatherForecastView(data) {
     const locationDesc = document.querySelector(
         "#temperature-details #description",
     );
-    const locationIcon = document.querySelector("#weather-icon img");
+    // Air conditions
+    const locationFeelsLike = document.querySelector('#weather-feels-like__value')
+    const locationPrecipitation = document.querySelector('#weather-precipitation__value')
+    const locationWindSpeed = document.querySelector("#weather-wind__value")
 
     locationName.textContent = data.address;
     locationTemp.textContent = Math.round(data.days[0].temp);
     locationDesc.textContent = data.days[0].conditions;
+    locationFeelsLike.textContent = Math.round(data.days[0].feelslike) + "°";
+    locationPrecipitation.textContent = Math.round(data.days[0].precip) + "%";
+    locationWindSpeed.textContent = Math.round(data.days[0].windspeed) + "km/h";
     // locationIcon.src =
-    await loadDynamicImage(getIconMapping(data.days[0].icon), "#weather-icon img");
+    await loadDynamicImage(getIconMapping(data.days[0].icon), "#weather-icon img")
 
     // 7 DAY FORECAST
 
@@ -53,7 +59,7 @@ async function loadDynamicImage(iconMpapping, selector) {
 
 export async function generateWeatherForecast(location) {
     try {
-        // pauses function execution until promis is resolved. fetchTimelineWeather is a async fn that returns a promise
+        // pauses function execution until promise is resolved. fetchTimelineWeather is a async fn that returns a promise
         const data = await fetchTimelineWeather(location);
         await generateWeatherForecastView(data);
     } catch (error) {
