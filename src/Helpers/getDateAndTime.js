@@ -1,9 +1,13 @@
 import { format } from "date-fns";
 
-const now = new Date();
+export default function setDateTime() {
+    const now = new Date();
 
-export default {
-    "date": format(now, "EEEE, d MMMM yyyy"),
-    "time": format(now, "hh:mm a"),
-    "timestamp": Date.now()
+    const date = document.querySelector("#location__date-time #date");
+    const time = document.querySelector("#location__date-time #time");
+
+    // console.log(dateTime.time);
+
+    date.textContent = format(now, "EEEE, d MMMM yyyy");
+    time.textContent = format(now, "hh:mm a");
 }

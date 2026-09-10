@@ -1,3 +1,4 @@
+import setDateTime from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import fetchTimelineWeather from "../Service/weather.js";
 
@@ -15,9 +16,13 @@ async function generateWeatherForecastView(data) {
         "#temperature-details #description",
     );
     // Air conditions
-    const locationFeelsLike = document.querySelector('#weather-feels-like__value')
-    const locationPrecipitation = document.querySelector('#weather-precipitation__value')
-    const locationWindSpeed = document.querySelector("#weather-wind__value")
+    const locationFeelsLike = document.querySelector(
+        "#weather-feels-like__value",
+    );
+    const locationPrecipitation = document.querySelector(
+        "#weather-precipitation__value",
+    );
+    const locationWindSpeed = document.querySelector("#weather-wind__value");
 
     locationName.textContent = data.address;
     locationTemp.textContent = Math.round(data.days[0].temp);
@@ -26,7 +31,10 @@ async function generateWeatherForecastView(data) {
     locationPrecipitation.textContent = Math.round(data.days[0].precip) + "%";
     locationWindSpeed.textContent = Math.round(data.days[0].windspeed) + "km/h";
     // locationIcon.src =
-    await loadDynamicImage(getIconMapping(data.days[0].icon), "#weather-icon img")
+    await loadDynamicImage(
+        getIconMapping(data.days[0].icon),
+        "#weather-icon img",
+    );
 
     // 7 DAY FORECAST
 
@@ -39,11 +47,9 @@ async function loadDynamicImage(iconMpapping, selector) {
 
     try {
         // 2. Try to import the image and destructure it immediately
-        imageUrl = await import(
-            `../Assets/weather_icons/${iconMpapping}`
-        );
+        imageUrl = await import(`../Assets/weather_icons/${iconMpapping}`);
 
-        imageUrl = imageUrl.default
+        imageUrl = imageUrl.default;
 
         // 3. If successful, you can use the URL here
         console.log("Success! Image URL is:", imageUrl);
@@ -79,6 +85,7 @@ export function initSearchForm(formSelector) {
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
+        setDateTime();
         //FE Validate here?
         generateWeatherForecast(searchInput.value);
     });
