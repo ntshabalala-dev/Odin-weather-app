@@ -220,13 +220,23 @@ footer {
 
 #location {
     /* possibly add gap to parent div */
-    margin-top: 1rem;
+    margin-block: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+#location .description {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 /* ##03 - WEATHER OVERVIEW */
+.weather-overview-container {
+    display: flex;
+    flex-direction: column;
+}
+
 #weather-overview {
     display: flex;
     flex-wrap: wrap;
@@ -241,7 +251,7 @@ footer {
     align-items: last baseline;
     /* padding-block: 2rem; */
     padding-top: 2rem;
-    padding-bottom: 1.6rem;
+    padding-bottom: 1rem;
 }
 
 .weather-overview__extra-info {
@@ -271,6 +281,7 @@ footer {
 #temperature-details {
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
 }
 
 #temperature-amount {
@@ -572,26 +583,30 @@ footer {
     }
 
     #weather-overview {
-        margin-block: 1.7rem;
-        width: 100%;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0px;
     }
 
     #weather-extra-details>span:nth-child(4),
     #weather-extra-details>span:nth-child(2) {
-        display: none;
+        /* display: none; */
     }
 
     #weather-extra-details {
-        flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 12px;
         font-size: 1.15rem;
         align-self: flex-end;
+        margin-bottom: -1.4rem;
+    }
+
+    #weather-extra-details .text {
+        display: none;
     }
 
     .weather-overview__extra-info {
-        flex-direction: row;
+        /* flex-direction: row; */
         /* align-self: flex-end; */
 
     }
@@ -662,7 +677,18 @@ footer {
 
     .weather-overview__temperature {
         padding-top: 0;
-        padding-bottom: 0;
+        padding-bottom: 12px;
+    }
+
+    .weather-overview-container {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #location__date-time {
+        margin-bottom: 1.2rem;
     }
 }
 

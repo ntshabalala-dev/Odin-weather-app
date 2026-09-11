@@ -39,9 +39,50 @@ async function generateWeatherForecastView(data) {
     // 7 DAY FORECAST
 
     // HOURLY FORECAST
+    const dropDown = document.querySelector('#hourly-forecast__days');
+    const hourlyForecastBody = document.querySelector('#hourly-forecast__body');
+
+    dropDown.textContent = '';
+    hourlyForecastBody.textContent = '';
+
     data.days.forEach(day => {
         console.log(getDayOfTheWeek(day.datetime));
+        const option = document.createElement('option')
+        option.value = getDayOfTheWeek(day.datetime);
+        option.textContent = getDayOfTheWeek(day.datetime);
+        dropDown.appendChild(option)
     });
+
+    dropDown.selectedIndex = 0;
+    const forecastCard = document.createElement('div');
+    forecastCard.innerHTML =
+        `<div class="hourly-forecast__card">
+            <!-- <div class="half"> -->
+            <span class="hour is-loading">18:00</span>
+            <span class="icon is-loading">
+                <img class="hourly-forecast__icon" src="./Assets/weather_icons/partlycloudy.svg" alt="">
+                <span id="description">Partly cloudy</span>
+            </span>
+            <span class="temperature is-loading">
+                <span id="max">23°</span>&#47;<span id="min">12°</span>
+            </span>
+            <!-- </div> -->
+            <span id="feels-like">
+                <img src="./Assets/air_conditions/Temperature.svg" alt="">
+                <span class="is-loading" id="feels-like__value value">23°</span>
+            </span>
+            <!--  -->
+            <span id="wind">
+                <img src="./Assets/air_conditions/Wind.svg" alt="">
+                <span class="is-loading" id="weather-wind__value value">10km/h</span>
+            </span>
+            <!--  -->
+            <span id="precipitation">
+                <img src="./Assets/air_conditions/Rain.svg" alt="">
+                <span class="is-loading" id="precipitation__value value">40%</span>
+            </span>
+        </div>`
+    hourlyForecastBody.appendChild(forecastCard)
 }
 
 async function loadDynamicImage(iconMpapping, selector) {
@@ -72,9 +113,9 @@ export async function generateWeatherForecast(location) {
         const data = await fetchTimelineWeather(location);
         await generateWeatherForecastView(data);
     } catch (error) {
-        //console.log(error.message);
-        const errorMessage = error.message.split(":").at(-1);
-        console.error(errorMessage);
+        console.error(error.message);
+        //const errorMessage = error.message.split(":").at(-1);
+        //console.error(errorMessage);
         return;
     }
 
