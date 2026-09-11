@@ -7,7 +7,7 @@ import { generateWeatherForecast, initSearchForm } from "./Modules/search.js";
 async function onLoad() {
     setDateTime()
 
-    await generateWeatherForecast('Klerksdorp')
+    // await generateWeatherForecast('Klerksdorp')
 
     document.querySelectorAll('.is-loading').forEach(element => {
         element.classList.toggle('is-loading')

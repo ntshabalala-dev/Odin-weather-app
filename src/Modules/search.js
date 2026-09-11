@@ -13,23 +13,24 @@ async function generateWeatherForecastView(data) {
     const locationName = document.getElementById("location__name");
     const locationTemp = document.querySelector("#temperature-amount #value");
     const locationDesc = document.querySelector(
-        "#temperature-details #description",
+        "#weather-extra-details #description",
     );
+
+    console.log('hello');
     // Air conditions
     const locationFeelsLike = document.querySelector(
-        "#weather-feels-like__value",
+        "#feels-like__value",
     );
-    const locationPrecipitation = document.querySelector(
-        "#weather-precipitation__value",
-    );
-    const locationWindSpeed = document.querySelector("#weather-wind__value");
 
     locationName.textContent = data.address;
     locationTemp.textContent = Math.round(data.days[0].temp);
     locationDesc.textContent = data.days[0].conditions;
     locationFeelsLike.textContent = Math.round(data.days[0].feelslike) + "°";
-    locationPrecipitation.textContent = Math.round(data.days[0].precip) + "%";
-    locationWindSpeed.textContent = Math.round(data.days[0].windspeed) + "km/h";
+
+
+
+    // locationPrecipitation.textContent = Math.round(data.days[0].precip) + "%";
+    // locationWindSpeed.textContent = Math.round(data.days[0].windspeed) + "km/h";
     // locationIcon.src =
     await loadDynamicImage(
         getIconMapping(data.days[0].icon),
@@ -69,7 +70,7 @@ async function generateWeatherForecastView(data) {
             <!-- </div> -->
             <span id="feels-like">
                 <img src="./Assets/air_conditions/Temperature.svg" alt="">
-                <span class="is-loading" id="feels-like__value value">23°</span>
+                <span class="is-loading" id="feels-like__value value">24°</span>
             </span>
             <!--  -->
             <span id="wind">
@@ -104,7 +105,9 @@ async function loadDynamicImage(iconMpapping, selector) {
     }
 
     // 5. Use the final URL (either the real one or the fallback)
-    document.querySelector(selector).src = imageUrl;
+    const icon = document.querySelector(selector);
+    icon.className = iconMpapping.split('.')[0];
+    icon.src = imageUrl;
 }
 
 export async function generateWeatherForecast(location) {

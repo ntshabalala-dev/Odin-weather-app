@@ -61,34 +61,20 @@
                         </span>
                     </div>
                 </div>
-                <span class="description is-loading" id="description">
-                    Partly cloudy
+                <span id="feels-like">
+                    <img src="./Assets/air_conditions/Temperature.svg" alt="">
+                    <span>Feels Like:</span>
+                    <span class="is-loading" id="feels-like__value">23°</span>
                 </span>
             </div>
             <div class="weather-overview" id="weather-overview">
                 <div class="weather-overview__extra-info">
                     <div id="weather-icon" class="weather-icon is-loading">
-                        <img src="./Assets/weather_icons/foggy.svg" style="width: 170px; height: auto;" alt="">
+                        <img class="windy" src="./Assets/weather_icons/windy.svg" alt="weather-icon">
                     </div>
                 </div>
                 <div id="weather-extra-details">
-                    <span id="weather-feels-like">
-                        <img src="./Assets/air_conditions/Temperature.svg" alt="">
-                        <span class="text">Feels like:</span>
-                        <span id="weather-feels-like__value" class="value is-loading">23°</span>
-                    </span>
-                    <span class="vertical-splitor">&#10072;</span>
-                    <span id="weather-precipitation">
-                        <img src="./Assets/air_conditions/Rain.svg" alt="">
-                        <span class="text">Precipitation:</span>
-                        <span id="weather-precipitation__value" class="value is-loading">40%</span>
-                    </span>
-                    <span class="vertical-splitor">&#10072;</span>
-                    <span id="weather-wind">
-                        <img src="./Assets/air_conditions/Wind.svg" alt="">
-                        <span class="text">Wind:</span>
-                        <span id="weather-wind__value" class="value is-loading">10km/h</span>
-                    </span>
+                    <div id="description">Partly cloudy</div>
                 </div>
             </div>
         </div>
@@ -204,7 +190,7 @@
                     <span class="weather-forecast__text is-loading">Monday</span>
                     <!-- ICON -->
                     <div class="weather-forecast__icon is-loading">
-                        <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
+                        <img class="weather-forecast__icon" src="./Assets/weather_icons/windy.svg" alt="">
                     </div>
                     <!-- TEMP -->
                     <span class="weather-forecast__temperature is-loading">
@@ -268,7 +254,7 @@
                     <!-- </div> -->
                     <span id="feels-like">
                         <img src="./Assets/air_conditions/Temperature.svg" alt="">
-                        <span class="is-loading" id="feels-like__value value">23°</span>
+                        <span class="is-loading" id="hourly-feels-like__value">23°</span>
                     </span>
                     <!--  -->
                     <span id="wind">
