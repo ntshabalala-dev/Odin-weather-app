@@ -183,7 +183,8 @@ footer {
     font-size: 1rem;
     outline: none;
     border: none;
-    background-color: transparent
+    background-color: transparent;
+    height: 1.4rem;
 }
 
 #search-location__btn {
@@ -208,7 +209,7 @@ footer {
     transition: transform 0.5s ease-in-out;
 }
 
-.search-location__container img {
+#search-location__btn img {
     width: 24px;
     height: auto;
 }
@@ -518,6 +519,24 @@ footer {
     font-weight: 700;
 }
 
+/* ##06 clear */
+#clear-button {
+    /* position: relative;
+    top: 0;
+    right: 0; */
+    background: none;
+    outline: none;
+    border: none;
+    display: flex;
+    cursor: pointer;
+    padding-right: 4px;
+}
+
+#clear-button img {
+    width: 25px;
+    height: auto;
+}
+
 /* SKELETON */
 /* Skeleton shimmer effect */
 /* .skeleton::before {
@@ -688,7 +707,7 @@ input:-webkit-autofill:focus {
         height: 4px;
     }
 
-    .search-location__container img {
+    #search-location__btn img {
         width: 27px;
         height: auto;
     }
@@ -743,6 +762,22 @@ input:-webkit-autofill:focus {
 
     .temperature #max {
         font-size: 1.2rem;
+    }
+
+    .hourly-forecast__card .temperature {
+        width: 27px;
+    }
+
+    .hourly-forecast__card #feels-like {
+        width: 46px;
+    }
+
+    .hourly-forecast__card #wind {
+        width: 82px;
+    }
+
+    .hourly-forecast__card #precipitation {
+        width: 70px;
     }
 }
 
