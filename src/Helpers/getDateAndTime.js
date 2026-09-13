@@ -7,7 +7,7 @@ export function setDateTime() {
     const time = document.querySelector("#location__date-time #time");
 
     date.textContent = format(now, "EEEE, d MMMM yyyy");
-    time.textContent = format(now, "hh:mm a");
+    time.textContent = format(now, "HH:MM a");
 }
 
 export function getDayOfTheWeek(date) {

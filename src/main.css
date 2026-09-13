@@ -183,6 +183,7 @@ footer {
     font-size: 1rem;
     outline: none;
     border: none;
+    background-color: transparent
 }
 
 #search-location__btn {
@@ -346,6 +347,7 @@ footer {
     font-weight: 700;
     margin-top: 1.1rem;
     text-align: left;
+    margin-bottom: 12px;
 }
 
 .weather-forecast__container {
@@ -580,6 +582,15 @@ footer {
     }
 }
 
+/* Target autofill state across Chromium browsers */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    /* Inset box-shadow covers up the browser's default autofill background */
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #333333 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
 
 /* MEDIA QUERIES */
 
@@ -598,10 +609,12 @@ footer {
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 112px;
     }
 
     .hourly-forecast__card {
-        padding-inline: 2rem;
+        padding-inline: 2.5rem;
+        padding-block: 3px;
     }
 
     #hourly-forecast__body {
@@ -726,6 +739,10 @@ footer {
 
     #location__date-time {
         margin-bottom: 1.2rem;
+    }
+
+    .temperature #max {
+        font-size: 1.2rem;
     }
 }
 

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import fetchTimelineWeather from "../Service/weather.js";
@@ -27,11 +28,6 @@ async function generateWeatherForecastView(data) {
     locationDesc.textContent = data.days[0].conditions;
     locationFeelsLike.textContent = Math.round(data.days[0].feelslike) + "°";
 
-
-
-    // locationPrecipitation.textContent = Math.round(data.days[0].precip) + "%";
-    // locationWindSpeed.textContent = Math.round(data.days[0].windspeed) + "km/h";
-    // locationIcon.src =
     await loadDynamicImage(
         getIconMapping(data.days[0].icon),
         "#weather-icon img",
@@ -47,7 +43,7 @@ async function generateWeatherForecastView(data) {
     hourlyForecastBody.textContent = '';
 
     data.days.forEach(day => {
-        console.log(getDayOfTheWeek(day.datetime));
+        // console.log(getDayOfTheWeek(day.datetime));
         const option = document.createElement('option')
         option.value = getDayOfTheWeek(day.datetime);
         option.textContent = getDayOfTheWeek(day.datetime);
@@ -55,44 +51,133 @@ async function generateWeatherForecastView(data) {
     });
 
     dropDown.selectedIndex = 0;
-    const forecastCard = document.createElement('div');
-    forecastCard.innerHTML =
-        `<div class="hourly-forecast__card">
+
+    const now = new Date();
+    const windowLow = `${format(now, "HH")}:00`
+    const windowHigh = `${+windowLow.split(':')[0] + 1}:00`
+    const hoursFrom = format(now, "HH") === windowLow
+        ? windowLow
+        : windowHigh
+
+    let hours = data.days[0].hours;
+
+    if (hoursFrom > "12:00") {
+
+        const fromKey = +hoursFrom.split(':')[0]
+        let toKey = fromKey - 12;
+        const from = hours.filter((hour) => {
+            return hour.datetime > `${fromKey}:00`
+        })
+
+        if (toKey < 10) {
+            toKey = `0${toKey}`
+        }
+
+        const to = hours.filter((hour) => {
+            return hour.datetime < `${toKey}:00`
+        })
+        hours = [...from, ...to]
+    } else {
+        hours = hours.filter((hour) => {
+            return hour.datetime > hoursFrom
+        }).slice(0, 12)
+    }
+
+
+    console.log(hours[0]);
+
+    // const time = `${hours[0].datetime.slice(0, 2)}`
+    // const hourlyIcon = `${hours[0].icon}`
+    // const newId = `${hourlyIcon}-${time}`
+
+    hours.forEach(async (hour) => {
+        const forecastCard = document.createElement('div');
+        const time = `${hour.datetime.slice(0, 2)}`
+        const hourlyIcon = `${hour.icon}`
+        const newId = `${hourlyIcon}-${time}`
+
+        forecastCard.innerHTML =
+            `<div class="hourly-forecast__card">
             <!-- <div class="half"> -->
-            <span class="hour is-loading">18:00</span>
+            <span class="hour is-loading">${hour.datetime.slice(0, 5)}</span>
             <span class="icon is-loading">
-                <img class="hourly-forecast__icon" src="./Assets/weather_icons/partlycloudy.svg" alt="">
-                <span id="description">Partly cloudy</span>
+                <img class="hourly-forecast__icon" id="${newId}" src="" alt="">
+                <span id="description">${hour.conditions}</span>
             </span>
             <span class="temperature is-loading">
-                <span id="max">23°</span>&#47;<span id="min">12°</span>
+                <span id="max">${Math.round(hour.temp)}°</span>
             </span>
             <!-- </div> -->
             <span id="feels-like">
                 <img src="./Assets/air_conditions/Temperature.svg" alt="">
-                <span class="is-loading" id="feels-like__value value">24°</span>
+                <span class="is-loading" id="feels-like__value value">${hour.feelslike}</span>
             </span>
             <!--  -->
             <span id="wind">
                 <img src="./Assets/air_conditions/Wind.svg" alt="">
-                <span class="is-loading" id="weather-wind__value value">10km/h</span>
+                <span class="is-loading" id="weather-wind__value value">${Math.round(hour.windspeed)}km/h</span>
             </span>
             <!--  -->
             <span id="precipitation">
                 <img src="./Assets/air_conditions/Rain.svg" alt="">
-                <span class="is-loading" id="precipitation__value value">40%</span>
+                <span class="is-loading" id="precipitation__value value">${hour.precip}%</span>
             </span>
-        </div>`
-    hourlyForecastBody.appendChild(forecastCard)
+        </div>`;
+
+
+        hourlyForecastBody.appendChild(forecastCard)
+
+        await loadAirConditionIcons(forecastCard)
+        await loadHourlyDynamicImage(hourlyIcon, newId)
+    });
 }
 
-async function loadDynamicImage(iconMpapping, selector) {
+async function loadAirConditionIcons(row) {
+    const data = [
+        { "feels-like": "Temperature.svg" },
+        { "wind": "Wind.svg" },
+        { "precipitation": "Rain.svg" }
+    ]
+
+    data.forEach(async (element) => {
+
+        const [[key, value]] = Object.entries(element);
+        // Returns: [ ['name', 'Alice'] ]
+        //console.log(key, value);
+
+        let imageUrl = await import(`../Assets/air_conditions/${value}`);
+
+
+        console.log(key, value, imageUrl);
+
+        imageUrl = imageUrl.default;
+        const icon = row.querySelector(`.hourly-forecast__card #${key} img`);
+        console.log(icon);
+
+        icon.src = imageUrl
+    });
+}
+
+async function loadHourlyDynamicImage(hourlyIcon, hourIdentifier) {
+    let imageUrl = '';
+    try {
+        imageUrl = await import(`../Assets/weather_icons/${getIconMapping(hourlyIcon)}`);
+        imageUrl = imageUrl.default;
+    } catch (error) {
+        console.error(`Failed to load the image file for ${hourIdentifier}:`, error);
+        imageUrl = `../Assets/sun.svg`;
+    }
+    const icon = document.querySelector(`#${hourIdentifier}`);
+    icon.src = imageUrl
+}
+
+async function loadDynamicImage(iconMapping, selector) {
     // 1. Declare the variable outside so you can use it later
     let imageUrl = "";
 
     try {
         // 2. Try to import the image and destructure it immediately
-        imageUrl = await import(`../Assets/weather_icons/${iconMpapping}`);
+        imageUrl = await import(`../Assets/weather_icons/${iconMapping}`);
 
         imageUrl = imageUrl.default;
 
@@ -106,7 +191,7 @@ async function loadDynamicImage(iconMpapping, selector) {
 
     // 5. Use the final URL (either the real one or the fallback)
     const icon = document.querySelector(selector);
-    icon.className = iconMpapping.split('.')[0];
+    icon.className = iconMapping.split('.')[0];
     icon.src = imageUrl;
 }
 
@@ -130,10 +215,16 @@ export function initSearchForm(formSelector) {
     const form = document.querySelector(formSelector);
     searchInput = document.getElementById("search-location__input");
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
         setDateTime();
         //FE Validate here?
-        generateWeatherForecast(searchInput.value);
+        await generateWeatherForecast(searchInput.value);
+
+        // console.log(document.querySelectorAll('.is-loading'));
+
+        document.querySelectorAll('.is-loading').forEach(element => {
+            element.classList.remove('is-loading')
+        });
     });
 }
