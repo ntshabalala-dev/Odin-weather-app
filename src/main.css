@@ -623,6 +623,7 @@ input:-webkit-autofill:focus {
     .hourly-forecast__card #description {
         display: inline-flex;
         text-align: center;
+        white-space: nowrap;
     }
 
     .hourly-forecast__card .icon {
