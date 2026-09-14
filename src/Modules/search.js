@@ -34,33 +34,33 @@ async function generateWeatherForecastView(data) {
     );
 
     // 7 DAY FORECAST
-    const forecastContainer = document.getElementById('weather-forecast__container')
-    forecastContainer.textContent = '';
-    data.days.forEach(day => {
-        const forecastDayCard = document.createElement('div')
-        forecastDayCard.className = 'weather-forecast__card'
-        forecastDayCard.innerHTML = `
-                    <!-- DAY -->
-                    <span class="weather-forecast__text is-loading">Monday</span>
-                    <!-- ICON -->
-                    <div class="weather-forecast__icon is-loading">
-                        <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
-                    </div>
-                    <!-- TEMP -->
-                    <span class="weather-forecast__temperature is-loading">
-                        <span id="max">23°</span>&#8210;<span id="min">12°</span>
-                    </span>
-                    <!-- DESCRIPTION -->
-                    <span class="weather-forecast__description is-loading">Overcast clouds</span>
-                    <!-- PRECIPITATION -->
-                    <span class="weather-forecast__precipitation">
-                        <img src="./Assets/air_conditions/Rain.svg" alt="">
-                        <span class="weather-precipitation is-loading"
-                            id="weather-precipitation__value value">12%</span>
-                    </span>`
+    // const forecastContainer = document.getElementById('weather-forecast__container')
+    // forecastContainer.textContent = '';
+    // data.days.forEach(day => {
+    //     const forecastDayCard = document.createElement('div')
+    //     forecastDayCard.className = 'weather-forecast__card'
+    //     forecastDayCard.innerHTML = `
+    //                 <!-- DAY -->
+    //                 <span class="weather-forecast__text is-loading">Monday</span>
+    //                 <!-- ICON -->
+    //                 <div class="weather-forecast__icon is-loading">
+    //                     <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
+    //                 </div>
+    //                 <!-- TEMP -->
+    //                 <span class="weather-forecast__temperature is-loading">
+    //                     <span id="max">23°</span>&#8210;<span id="min">12°</span>
+    //                 </span>
+    //                 <!-- DESCRIPTION -->
+    //                 <span class="weather-forecast__description is-loading">Overcast clouds</span>
+    //                 <!-- PRECIPITATION -->
+    //                 <span class="weather-forecast__precipitation">
+    //                     <img src="./Assets/air_conditions/Rain.svg" alt="">
+    //                     <span class="weather-precipitation is-loading"
+    //                         id="weather-precipitation__value value">12%</span>
+    //                 </span>`
 
-        forecastContainer.appendChild(forecastDayCard)
-    });
+    //     forecastContainer.appendChild(forecastDayCard)
+    // });
 
     // HOURLY FORECAST
     await generateHourlyForecast(data);
@@ -72,7 +72,6 @@ async function generateHourlyForecast(data) {
 
     dropDown.textContent = '';
     hourlyForecastBody.textContent = '';
-
     data.days.forEach(day => {
         const option = document.createElement('option')
         option.value = getDayOfTheWeek(day.datetime);
@@ -83,13 +82,12 @@ async function generateHourlyForecast(data) {
     dropDown.selectedIndex = 0;
 
     const now = new Date();
+    let hours = data.days[0].hours;
     const windowLow = `${format(now, "HH")}:00`
-    const windowHigh = `${+windowLow.split(':')[0] + 1}:00`
+    const windowHigh = +windowLow.split(':')[0] + 1
     const hoursFrom = format(now, "HH") === windowLow
         ? windowLow
-        : windowHigh
-
-    let hours = data.days[0].hours;
+        : windowHigh < 10 ? `0${windowHigh}:00` : `${windowHigh}:00`
 
     if (hoursFrom > "12:00") {
         const fromKey = +hoursFrom.split(':')[0]
@@ -152,7 +150,6 @@ async function generateHourlyForecast(data) {
         await loadAirConditionIcons(forecastCard)
         await loadHourlyDynamicImage(hourlyIcon, newId)
     });
-
 }
 
 async function loadAirConditionIcons(row) {
