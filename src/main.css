@@ -375,7 +375,7 @@ footer {
 }
 
 .weather-forecast__card .weather-forecast__description {
-    font-size: 1rem;
+    font-size: 1.02rem;
     white-space: nowrap;
     width: 100%;
 }
