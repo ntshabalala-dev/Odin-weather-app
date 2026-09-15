@@ -370,25 +370,27 @@ footer {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.weather-forecast__temperature {
-    margin-bottom: 7px;
-}
-
 .weather-forecast__text {
     font-size: 1.2rem;
 }
 
 .weather-forecast__card .weather-forecast__description {
-    text-align: center;
-    /* Allow span to respect width */
-    display: inline-block;
+    font-size: 1rem;
+    white-space: nowrap;
     width: 100%;
-    font-size: 1.1rem;
-    white-space: wrap;
+}
+
+.description-container {
+    text-align: center;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-inline: 3px;
 }
 
 .weather-forecast__temperature {
     font-weight: 700;
+    margin-bottom: 4px;
 }
 
 .weather-forecast__temperature #max {
@@ -612,7 +614,6 @@ input:-webkit-autofill:focus {
 }
 
 /* MEDIA QUERIES */
-
 @media (min-width:765px) {
 
     .hourly-forecast__card #wind,
@@ -671,8 +672,6 @@ input:-webkit-autofill:focus {
         align-items: center;
         gap: 12px;
         font-size: 1.3rem;
-        /* font-weight: 500; */
-        /* align-self: flex-end; */
         margin-bottom: -1.6rem;
     }
 
@@ -683,7 +682,6 @@ input:-webkit-autofill:focus {
     .weather-overview__extra-info {
         /* flex-direction: row; */
         /* align-self: flex-end; */
-
     }
 
     #weather-extra-details>span>img {
@@ -695,7 +693,6 @@ input:-webkit-autofill:focus {
     #temperature-amount #value {
         display: inline-block;
         font-size: 10rem;
-        /* height: 0; */
     }
 
     .hamburger {

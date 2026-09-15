@@ -34,33 +34,36 @@ async function generateWeatherForecastView(data) {
     );
 
     // 7 DAY FORECAST
-    // const forecastContainer = document.getElementById('weather-forecast__container')
-    // forecastContainer.textContent = '';
-    // data.days.forEach(day => {
-    //     const forecastDayCard = document.createElement('div')
-    //     forecastDayCard.className = 'weather-forecast__card'
-    //     forecastDayCard.innerHTML = `
-    //                 <!-- DAY -->
-    //                 <span class="weather-forecast__text is-loading">Monday</span>
-    //                 <!-- ICON -->
-    //                 <div class="weather-forecast__icon is-loading">
-    //                     <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
-    //                 </div>
-    //                 <!-- TEMP -->
-    //                 <span class="weather-forecast__temperature is-loading">
-    //                     <span id="max">23°</span>&#8210;<span id="min">12°</span>
-    //                 </span>
-    //                 <!-- DESCRIPTION -->
-    //                 <span class="weather-forecast__description is-loading">Overcast clouds</span>
-    //                 <!-- PRECIPITATION -->
-    //                 <span class="weather-forecast__precipitation">
-    //                     <img src="./Assets/air_conditions/Rain.svg" alt="">
-    //                     <span class="weather-precipitation is-loading"
-    //                         id="weather-precipitation__value value">12%</span>
-    //                 </span>`
+    const forecastContainer = document.getElementById('weather-forecast__container')
+    forecastContainer.textContent = '';
+    data.days.forEach(day => {
+        console.log();
 
-    //     forecastContainer.appendChild(forecastDayCard)
-    // });
+
+        const forecastDayCard = document.createElement('div')
+        forecastDayCard.className = 'weather-forecast__card'
+        forecastDayCard.innerHTML = `
+                    <!-- DAY -->
+                    <span class="weather-forecast__text is-loading">${format((new Date(day.datetime)), "EEEE")}</span>
+                    <!-- ICON -->
+                    <div class="weather-forecast__icon is-loading">
+                        <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
+                    </div>
+                    <!-- TEMP -->
+                    <span class="weather-forecast__temperature is-loading">
+                        <span id="max">${Math.round(day.tempmax)}°</span>&#8210;<span id="min">${Math.round(day.tempmin)}°</span>
+                    </span>
+                    <!-- DESCRIPTION -->
+                    <div class="description-container"><span class="weather-forecast__description is-loading">${day.conditions}</span></div>
+                    <!-- PRECIPITATION -->
+                    <span class="weather-forecast__precipitation">
+                        <img src="./Assets/air_conditions/Rain.svg" alt="">
+                        <span class="weather-precipitation is-loading"
+                            id="weather-precipitation__value value">12%</span>
+                    </span>`
+
+        forecastContainer.appendChild(forecastDayCard)
+    });
 
     // HOURLY FORECAST
     await generateHourlyForecast(data);
@@ -215,8 +218,6 @@ export async function generateWeatherForecast(location) {
         await generateWeatherForecastView(data);
     } catch (error) {
         console.error(error.message);
-        //const errorMessage = error.message.split(":").at(-1);
-        //console.error(errorMessage);
         return;
     }
 
