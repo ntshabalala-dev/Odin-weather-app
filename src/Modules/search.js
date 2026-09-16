@@ -37,9 +37,6 @@ async function generateWeatherForecastView(data) {
     const forecastContainer = document.getElementById('weather-forecast__container')
     forecastContainer.textContent = '';
     data.days.forEach(async (day) => {
-        console.log();
-
-
         const forecastDayCard = document.createElement('div')
         forecastDayCard.className = 'weather-forecast__card'
         forecastDayCard.innerHTML = `
@@ -59,7 +56,7 @@ async function generateWeatherForecastView(data) {
                     <span class="weather-forecast__precipitation">
                         <img src="./Assets/air_conditions/Rain.svg" alt="">
                         <span class="weather-precipitation is-loading"
-                            id="weather-precipitation__value value">12%</span>
+                            id="weather-precipitation__value value">${Math.round(day.precip)}%</span>
                     </span>`
 
         forecastContainer.appendChild(forecastDayCard)
