@@ -36,7 +36,7 @@ async function generateWeatherForecastView(data) {
     // 7 DAY FORECAST
     const forecastContainer = document.getElementById('weather-forecast__container')
     forecastContainer.textContent = '';
-    data.days.forEach(day => {
+    data.days.forEach(async (day) => {
         console.log();
 
 
@@ -63,6 +63,7 @@ async function generateWeatherForecastView(data) {
                     </span>`
 
         forecastContainer.appendChild(forecastDayCard)
+        await loadforecastImages(forecastDayCard)
     });
 
     // HOURLY FORECAST
@@ -153,6 +154,13 @@ async function generateHourlyForecast(data) {
         await loadAirConditionIcons(forecastCard)
         await loadHourlyDynamicImage(hourlyIcon, newId)
     });
+}
+
+async function loadforecastImages(forecastDay) {
+    let imageurl = await import('../Assets/air_conditions/Rain.svg')
+    imageurl = imageurl.default;
+    const precipIcon = forecastDay.querySelector('.weather-forecast__precipitation img')
+    precipIcon.src = imageurl
 }
 
 async function loadAirConditionIcons(row) {
