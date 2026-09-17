@@ -1,6 +1,13 @@
 import { format } from "date-fns";
 import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
+import {
+    loadAirConditionIcons,
+    loadDynamicImage,
+    loadForecastPrecipIcon,
+    loadForecastWeatherIcon,
+    loadHourlyDynamicImage,
+} from "../Helpers/loadAssets.js";
 import fetchTimelineWeather from "../Service/weather.js";
 
 // import toastify
@@ -17,11 +24,8 @@ async function generateWeatherForecastView(data) {
         "#weather-extra-details #description",
     );
 
-    console.log('hello');
     // Air conditions
-    const locationFeelsLike = document.querySelector(
-        "#feels-like__value",
-    );
+    const locationFeelsLike = document.querySelector("#feels-like__value");
 
     locationName.textContent = data.address;
     locationTemp.textContent = Math.round(data.days[0].temp);
@@ -34,17 +38,27 @@ async function generateWeatherForecastView(data) {
     );
 
     // 7 DAY FORECAST
-    const forecastContainer = document.getElementById('weather-forecast__container')
-    forecastContainer.textContent = '';
+    await generateSevenDayForecast(data)
+
+    // HOURLY FORECAST
+    generateHourlyForecastDays(data);
+    await generateHourlyForecast(data);
+}
+
+async function generateSevenDayForecast(data) {
+    const forecastContainer = document.getElementById(
+        "weather-forecast__container",
+    );
+    forecastContainer.textContent = "";
     data.days.forEach(async (day) => {
-        const forecastDayCard = document.createElement('div')
-        forecastDayCard.className = 'weather-forecast__card'
+        const forecastDayCard = document.createElement("div");
+        forecastDayCard.className = "weather-forecast__card";
         forecastDayCard.innerHTML = `
                     <!-- DAY -->
-                    <span class="weather-forecast__text is-loading">${format((new Date(day.datetime)), "EEEE")}</span>
+                    <span class="weather-forecast__text is-loading">${format(new Date(day.datetime), "EEEE")}</span>
                     <!-- ICON -->
                     <div class="weather-forecast__icon is-loading">
-                        <img class="weather-forecast__icon" src="./Assets/weather_icons/clearnight2.svg" alt="">
+                        <img class="weather-forecast__icon" src="" alt="">
                     </div>
                     <!-- TEMP -->
                     <span class="weather-forecast__temperature is-loading">
@@ -56,70 +70,74 @@ async function generateWeatherForecastView(data) {
                     <span class="weather-forecast__precipitation">
                         <img src="./Assets/air_conditions/Rain.svg" alt="">
                         <span class="weather-precipitation is-loading"
-                            id="weather-precipitation__value value">${Math.round(day.precip)}%</span>
-                    </span>`
+                            id="weather-precipitation__value value">${Math.round(day.precipprob)}%</span>
+                    </span>`;
 
-        forecastContainer.appendChild(forecastDayCard)
-        await loadForecastPrecipIcon(forecastDayCard)
-        await loadForecastWeatherIcon(getIconMapping(day.icon), forecastDayCard)
+        forecastContainer.appendChild(forecastDayCard);
+        await loadForecastPrecipIcon(forecastDayCard);
+        await loadForecastWeatherIcon(getIconMapping(day.icon), forecastDayCard);
     });
-
-    // HOURLY FORECAST
-    await generateHourlyForecast(data);
 }
 
-async function generateHourlyForecast(data) {
-    const dropDown = document.querySelector('#hourly-forecast__days');
-    const hourlyForecastBody = document.querySelector('#hourly-forecast__body');
+function generateHourlyForecastDays(data) {
+    const dropDown = document.querySelector("#hourly-forecast__days");
+    dropDown.textContent = "";
 
-    dropDown.textContent = '';
-    hourlyForecastBody.textContent = '';
-    data.days.forEach(day => {
-        const option = document.createElement('option')
+    data.days.forEach((day) => {
+        const option = document.createElement("option");
         option.value = getDayOfTheWeek(day.datetime);
         option.textContent = getDayOfTheWeek(day.datetime);
-        dropDown.appendChild(option)
+        dropDown.appendChild(option);
     });
 
     dropDown.selectedIndex = 0;
+}
+
+export async function generateHourlyForecast(data, index = 0) {
+    const hourlyForecastBody = document.querySelector("#hourly-forecast__body");
+    hourlyForecastBody.textContent = "";
 
     const now = new Date();
-    let hours = data.days[0].hours;
-    const windowLow = `${format(now, "HH")}:00`
-    const windowHigh = +windowLow.split(':')[0] + 1
-    const hoursFrom = format(now, "HH") === windowLow
-        ? windowLow
-        : windowHigh < 10 ? `0${windowHigh}:00` : `${windowHigh}:00`
+    let hours = data.days[index].hours;
+    const windowLow = `${format(now, "HH")}:00`;
+    const windowHigh = +windowLow.split(":")[index] + 1;
+    const hoursFrom =
+        format(now, "HH") === windowLow
+            ? windowLow
+            : windowHigh < 10
+                ? `0${windowHigh}:00`
+                : `${windowHigh}:00`;
 
     if (hoursFrom > "12:00") {
-        const fromKey = +hoursFrom.split(':')[0]
+        const fromKey = +hoursFrom.split(":")[index];
         let toKey = fromKey - 12;
         const from = hours.filter((hour) => {
-            return hour.datetime > `${fromKey}:00`
-        })
+            return hour.datetime > `${fromKey}:00`;
+        });
 
         if (toKey < 10) {
-            toKey = `0${toKey}`
+            toKey = `0${toKey}`;
         }
 
         const to = hours.filter((hour) => {
-            return hour.datetime < `${toKey}:00`
-        })
-        hours = [...from, ...to]
+            return hour.datetime < `${toKey}:00`;
+        });
+        hours = [...from, ...to];
     } else {
-        hours = hours.filter((hour) => {
-            return hour.datetime > hoursFrom
-        }).slice(0, 12)
+        hours = hours
+            .filter((hour) => {
+                return hour.datetime > hoursFrom;
+            })
+            .slice(0, 12);
     }
 
     hours.forEach(async (hour) => {
-        const forecastCard = document.createElement('div');
-        const time = `${hour.datetime.slice(0, 2)}`
-        const hourlyIcon = `${hour.icon}`
-        const newId = `${hourlyIcon}-${time}`
+        const forecastCard = document.createElement("div");
+        const time = `${hour.datetime.slice(0, 2)}`;
+        const hourlyIcon = `${hour.icon}`;
+        const newId = `${hourlyIcon}-${time}`;
 
-        forecastCard.innerHTML =
-            `<div class="hourly-forecast__card">
+        forecastCard.innerHTML = `<div class="hourly-forecast__card">
             <!-- <div class="half"> -->
             <span class="hour is-loading">${hour.datetime.slice(0, 5)}</span>
             <span class="icon is-loading">
@@ -142,104 +160,15 @@ async function generateHourlyForecast(data) {
             <!--  -->
             <span id="precipitation">
                 <img src="" alt="">
-                <span class="is-loading" id="precipitation__value value">${Math.round(hour.precip)}%</span>
+                <span class="is-loading" id="precipitation__value value">${Math.round(hour.precipprob)}%</span>
             </span>
         </div>`;
 
+        hourlyForecastBody.appendChild(forecastCard);
 
-        hourlyForecastBody.appendChild(forecastCard)
-
-        await loadAirConditionIcons(forecastCard)
-        await loadHourlyDynamicImage(hourlyIcon, newId)
+        await loadAirConditionIcons(forecastCard);
+        await loadHourlyDynamicImage(hourlyIcon, newId);
     });
-}
-
-async function loadForecastWeatherIcon(iconMapping, forecastDay) {
-    // 1. Declare the variable outside so you can use it later
-    let imageUrl = "";
-
-    try {
-        // 2. Try to import the image and destructure it immediately
-        imageUrl = await import(`../Assets/weather_icons/${iconMapping}`);
-
-        imageUrl = imageUrl.default;
-
-        // 3. If successful, you can use the URL here
-        console.log("Success! Image URL is:", imageUrl);
-    } catch (error) {
-        // 4. If anything goes wrong, catch the error and set a fallback
-        console.error("Failed to load the image file:", error);
-        imageUrl = `../Assets/sun.svg`;
-    }
-
-    // 5. Use the final URL (either the real one or the fallback)
-    const icon = forecastDay.querySelector('.weather-forecast__icon img');
-    //icon.className = iconMapping.split('.')[0];
-    icon.src = imageUrl;
-
-}
-
-async function loadForecastPrecipIcon(forecastDay) {
-    let imageurl = await import('../Assets/air_conditions/Rain.svg')
-    imageurl = imageurl.default;
-    const precipIcon = forecastDay.querySelector('.weather-forecast__precipitation img')
-    precipIcon.src = imageurl
-}
-
-async function loadAirConditionIcons(row) {
-    const data = [
-        { "feels-like": "Temperature.svg" },
-        { "wind": "Wind.svg" },
-        { "precipitation": "Rain.svg" }
-    ]
-
-    data.forEach(async (element) => {
-
-        const [[key, value]] = Object.entries(element);
-
-        let imageUrl = await import(`../Assets/air_conditions/${value}`);
-
-        imageUrl = imageUrl.default;
-        const icon = row.querySelector(`.hourly-forecast__card #${key} img`);
-        icon.src = imageUrl
-    });
-}
-
-async function loadHourlyDynamicImage(hourlyIcon, hourIdentifier) {
-    let imageUrl = '';
-    try {
-        imageUrl = await import(`../Assets/weather_icons/${getIconMapping(hourlyIcon)}`);
-        imageUrl = imageUrl.default;
-    } catch (error) {
-        console.error(`Failed to load the image file for ${hourIdentifier}:`, error);
-        imageUrl = `../Assets/sun.svg`;
-    }
-    const icon = document.querySelector(`#${hourIdentifier}`);
-    icon.src = imageUrl
-}
-
-async function loadDynamicImage(iconMapping, selector) {
-    // 1. Declare the variable outside so you can use it later
-    let imageUrl = "";
-
-    try {
-        // 2. Try to import the image and destructure it immediately
-        imageUrl = await import(`../Assets/weather_icons/${iconMapping}`);
-
-        imageUrl = imageUrl.default;
-
-        // 3. If successful, you can use the URL here
-        console.log("Success! Image URL is:", imageUrl);
-    } catch (error) {
-        // 4. If anything goes wrong, catch the error and set a fallback
-        console.error("Failed to load the image file:", error);
-        imageUrl = `../Assets/sun.svg`;
-    }
-
-    // 5. Use the final URL (either the real one or the fallback)
-    const icon = document.querySelector(selector);
-    icon.className = iconMapping.split('.')[0];
-    icon.src = imageUrl;
 }
 
 export async function generateWeatherForecast(location) {
@@ -248,11 +177,11 @@ export async function generateWeatherForecast(location) {
         const data = await fetchTimelineWeather(location);
         await generateWeatherForecastView(data);
     } catch (error) {
-        const errorMessage = error.message.split(':').at(-1)
+        const errorMessage = error.message.split(":").at(-1);
         if (errorMessage) {
             console.error(errorMessage);
         } else {
-            console.error(`Failed to generate weather forecaset: ${error.message}`)
+            console.error(`Failed to generate weather forecaset: ${error.message}`);
         }
         return;
     }
@@ -271,26 +200,37 @@ export function initSearchForm(formSelector) {
         //FE Validate here?
         await generateWeatherForecast(searchInput.value);
 
-        document.querySelectorAll('.is-loading').forEach(element => {
-            element.classList.remove('is-loading')
+        document.querySelectorAll(".is-loading").forEach((element) => {
+            element.classList.remove("is-loading");
         });
+
+        const searchEvent = new CustomEvent('searchPerformed', {
+            bubbles: true, // Allows the event to travel up the HTML tree
+            detail: {
+                searchTerm: searchInput.value,
+                timestamp: Date.now()
+            }
+        });
+
+        //Dispatch event so that the latest weather Data gets sent to the forecastDaysDropDown.js module
+        form.dispatchEvent(searchEvent);
     });
 }
 
 export function initSearchBar(inputSelector) {
-    const searchBar = document.querySelector(inputSelector)
-    const clearButton = document.querySelector('#clear-button-img')
+    const searchBar = document.querySelector(inputSelector);
+    const clearButton = document.querySelector("#clear-button-img");
 
-    searchBar.addEventListener('input', () => {
+    searchBar.addEventListener("input", () => {
         if (searchBar.value.length > 0) {
-            clearButton.style.visibility = 'visible';
+            clearButton.style.visibility = "visible";
         } else {
-            clearButton.style.visibility = 'hidden';
+            clearButton.style.visibility = "hidden";
         }
-    })
+    });
 
-    clearButton.addEventListener('click', () => {
-        searchBar.value = ''
-        clearButton.style.visibility = 'hidden';
-    })
+    clearButton.addEventListener("click", () => {
+        searchBar.value = "";
+        clearButton.style.visibility = "hidden";
+    });
 }

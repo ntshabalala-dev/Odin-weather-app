@@ -41,7 +41,7 @@ export default async function fetchTimelineWeather(location) {
             console.log("First day's description:", data.days[0].description);
             console.log("First day's icon:", data.days[0].icon);
         }
-
+        localStorage.setItem('weatherData', JSON.stringify(data))
         return data;
     } catch (err) {
         console.error("Error fetching weather data:", err);

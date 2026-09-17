@@ -1,6 +1,7 @@
 import "../src/main.css";
 import { setDateTime } from "./Helpers/getDateAndTime.js";
 import getIconMapping from "./Helpers/getIconMapping.js";
+import initDropDown from "./Modules/forecastDaysDropDown.js";
 import registerHamburgerMenuButtons from "./Modules/hamburgerMenu.js";
 import {
     generateWeatherForecast,
@@ -19,7 +20,6 @@ async function onLoad() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const log = console.log;
     console.log(getIconMapping("partly-cloudy-day"));
 
     await onLoad();
@@ -28,4 +28,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     registerHamburgerMenuButtons(["#nav-menu__close", "#hamburger-btn"]);
     initSearchForm(".search-location-from");
     initSearchBar("#search-location__input");
+    initDropDown("#hourly-forecast__days")
 });

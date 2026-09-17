@@ -683,11 +683,6 @@ input:-webkit-autofill:focus {
         display: none;
     }
 
-    .weather-overview__extra-info {
-        /* flex-direction: row; */
-        /* align-self: flex-end; */
-    }
-
     #weather-extra-details>span>img {
         width: 24px;
         height: auto;
@@ -786,6 +781,11 @@ input:-webkit-autofill:focus {
 
     .hourly-forecast__card #precipitation {
         width: 70px;
+    }
+
+    .hourly-forecast__card .temperature~span>img {
+        width: 24px;
+        height: auto;
     }
 }
 
