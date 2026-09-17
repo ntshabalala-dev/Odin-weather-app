@@ -214,6 +214,10 @@ footer {
     height: auto;
 }
 
+#clear-button-img {
+    visibility: hidden;
+}
+
 /* ##02 - LOCATION */
 #location__name {
     font-size: 3.7rem;

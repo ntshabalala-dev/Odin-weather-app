@@ -141,8 +141,8 @@ async function generateHourlyForecast(data) {
             </span>
             <!--  -->
             <span id="precipitation">
-                <img src="./Assets/air_conditions/Rain.svg" alt="">
-                <span class="is-loading" id="precipitation__value value">${hour.precip}%</span>
+                <img src="" alt="">
+                <span class="is-loading" id="precipitation__value value">${Math.round(hour.precip)}%</span>
             </span>
         </div>`;
 
@@ -248,7 +248,12 @@ export async function generateWeatherForecast(location) {
         const data = await fetchTimelineWeather(location);
         await generateWeatherForecastView(data);
     } catch (error) {
-        console.error(error.message);
+        const errorMessage = error.message.split(':').at(-1)
+        if (errorMessage) {
+            console.error(errorMessage);
+        } else {
+            console.error(`Failed to generate weather forecaset: ${error.message}`)
+        }
         return;
     }
 
@@ -270,4 +275,22 @@ export function initSearchForm(formSelector) {
             element.classList.remove('is-loading')
         });
     });
+}
+
+export function initSearchBar(inputSelector) {
+    const searchBar = document.querySelector(inputSelector)
+    const clearButton = document.querySelector('#clear-button-img')
+
+    searchBar.addEventListener('input', () => {
+        if (searchBar.value.length > 0) {
+            clearButton.style.visibility = 'visible';
+        } else {
+            clearButton.style.visibility = 'hidden';
+        }
+    })
+
+    clearButton.addEventListener('click', () => {
+        searchBar.value = ''
+        clearButton.style.visibility = 'hidden';
+    })
 }
