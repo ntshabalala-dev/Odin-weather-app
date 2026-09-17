@@ -99,36 +99,40 @@ export async function generateHourlyForecast(data, index = 0) {
 
     const now = new Date();
     let hours = data.days[index].hours;
-    const windowLow = `${format(now, "HH")}:00`;
-    const windowHigh = +windowLow.split(":")[index] + 1;
-    const hoursFrom =
-        format(now, "HH") === windowLow
-            ? windowLow
-            : windowHigh < 10
-                ? `0${windowHigh}:00`
-                : `${windowHigh}:00`;
 
-    if (hoursFrom > "12:00") {
-        const fromKey = +hoursFrom.split(":")[index];
-        let toKey = fromKey - 12;
-        const from = hours.filter((hour) => {
-            return hour.datetime > `${fromKey}:00`;
-        });
+    // Only calculate from current time on current day
+    if (index === 0) {
+        const windowLow = `${format(now, "HH")}:00`;
+        const windowHigh = +windowLow.split(":")[index] + 1;
+        const hoursFrom =
+            format(now, "HH") === windowLow
+                ? windowLow
+                : windowHigh < 10
+                    ? `0${windowHigh}:00`
+                    : `${windowHigh}:00`;
 
-        if (toKey < 10) {
-            toKey = `0${toKey}`;
+        if (hoursFrom > "12:00") {
+            const fromKey = +hoursFrom.split(":")[index];
+            let toKey = fromKey - 12;
+            const from = hours.filter((hour) => {
+                return hour.datetime > `${fromKey}:00`;
+            });
+
+            if (toKey < 10) {
+                toKey = `0${toKey}`;
+            }
+
+            const to = hours.filter((hour) => {
+                return hour.datetime < `${toKey}:00`;
+            });
+            hours = [...from, ...to];
+        } else {
+            hours = hours
+                .filter((hour) => {
+                    return hour.datetime > hoursFrom;
+                })
+                .slice(0, 12);
         }
-
-        const to = hours.filter((hour) => {
-            return hour.datetime < `${toKey}:00`;
-        });
-        hours = [...from, ...to];
-    } else {
-        hours = hours
-            .filter((hour) => {
-                return hour.datetime > hoursFrom;
-            })
-            .slice(0, 12);
     }
 
     hours.forEach(async (hour) => {
