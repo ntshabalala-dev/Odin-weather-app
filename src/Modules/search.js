@@ -154,7 +154,7 @@ export async function generateHourlyForecast(data, index = 0) {
             <!-- </div> -->
             <span id="feels-like">
                 <img src="" alt="">
-                <span class="is-loading" id="feels-like__value value">${Math.round(hour.feelslike)}</span>
+                <span class="is-loading" id="feels-like__value value">${Math.round(hour.feelslike)}°</span>
             </span>
             <!--  -->
             <span id="wind">

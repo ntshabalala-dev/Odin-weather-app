@@ -19,6 +19,24 @@ async function onLoad() {
     });
 }
 
+const tempSymbols = document.querySelector('#temperature-details #metric')
+
+tempSymbols.addEventListener('click', (e) => {
+    const target = e.target
+    const selected = document.querySelector('#metric .selected')
+    if (
+        target.classList.contains('selected') ||
+        (target.id !== 'fahrenheit' &&
+            target.id !== 'celsius')
+    ) {
+        return;
+    }
+
+    selected.classList.remove('selected')
+    target.classList.add('selected')
+    console.log(target);
+})
+
 document.addEventListener("DOMContentLoaded", async () => {
     console.log(getIconMapping("partly-cloudy-day"));
 

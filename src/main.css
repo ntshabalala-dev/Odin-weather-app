@@ -317,8 +317,13 @@ footer {
     white-space: wrap;
 }
 
-#metric span {
+#metric span:not(#vertical-seperator) {
     font-size: 1.5rem;
+}
+
+#metric #celsius,
+#metric #fahrenheit {
+    cursor: pointer;
 }
 
 #metric .selected {
@@ -749,6 +754,18 @@ input:-webkit-autofill:focus {
     .weather-overview__temperature {
         padding-top: 0;
         padding-bottom: 12px;
+        gap: 0px;
+    }
+
+    #temperature-details #metric {
+        display: flex;
+        align-items: center
+    }
+
+    #vertical-seperator {
+        /* line-height: 0.2; */
+        font-weight: 900;
+        font-size: 1.3rem;
     }
 
     .weather-overview-container {
