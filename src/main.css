@@ -398,15 +398,16 @@ footer {
 }
 
 .weather-forecast__temperature {
-    font-weight: 700;
     margin-bottom: 4px;
 }
 
 .weather-forecast__temperature #max {
+    font-weight: 700;
     padding-right: 1px;
 }
 
 .weather-forecast__temperature #min {
+    font-size: .9rem;
     padding-left: 1px;
 }
 
@@ -452,6 +453,16 @@ footer {
 .weather-icon img {
     width: 170px;
     height: auto;
+}
+
+#temperature-details #metric {
+    display: flex;
+}
+
+#vertical-seperator {
+    /* line-height: 0.2; */
+    font-weight: 900;
+    font-size: 1.3rem;
 }
 
 /* ##05 - HOURLY FORECAST */
@@ -755,17 +766,6 @@ input:-webkit-autofill:focus {
         padding-top: 0;
         padding-bottom: 12px;
         gap: 0px;
-    }
-
-    #temperature-details #metric {
-        display: flex;
-        align-items: center
-    }
-
-    #vertical-seperator {
-        /* line-height: 0.2; */
-        font-weight: 900;
-        font-size: 1.3rem;
     }
 
     .weather-overview-container {

@@ -62,7 +62,7 @@ async function generateSevenDayForecast(data) {
                     </div>
                     <!-- TEMP -->
                     <span class="weather-forecast__temperature is-loading">
-                        <span id="max">${Math.round(day.tempmax)}°</span>&#8210;<span id="min">${Math.round(day.tempmin)}°</span>
+                        <span id="max">${Math.round(day.tempmax)}°</span>&#47;<span id="min">${Math.round(day.tempmin)}°</span>
                     </span>
                     <!-- DESCRIPTION -->
                     <div class="description-container"><span class="weather-forecast__description is-loading">${day.conditions}</span></div>
