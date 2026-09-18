@@ -62,7 +62,7 @@ async function generateSevenDayForecast(data) {
                     </div>
                     <!-- TEMP -->
                     <span class="weather-forecast__temperature is-loading">
-                        <span id="max">${Math.round(day.tempmax)}°</span>&#47;<span id="min">${Math.round(day.tempmin)}°</span>
+                        <span class="metric-celcius" id="max">${Math.round(day.tempmax)}°</span>&#47;<span class="metric-celcius" id="min">${Math.round(day.tempmin)}°</span>
                     </span>
                     <!-- DESCRIPTION -->
                     <div class="description-container"><span class="weather-forecast__description is-loading">${day.conditions}</span></div>
@@ -149,17 +149,17 @@ export async function generateHourlyForecast(data, index = 0) {
                 <span id="description">${hour.conditions}</span>
             </span>
             <span class="temperature is-loading">
-                <span id="max">${Math.round(hour.temp)}°</span>
+                <span class="metric-celcius" id="max">${Math.round(hour.temp)}°</span>
             </span>
             <!-- </div> -->
             <span id="feels-like">
                 <img src="" alt="">
-                <span class="is-loading" id="feels-like__value value">${Math.round(hour.feelslike)}°</span>
+                <span class="is-loading metric-celcius" id="feels-like__value value">${Math.round(hour.feelslike)}°</span>
             </span>
             <!--  -->
             <span id="wind">
                 <img src="" alt="">
-                <span class="is-loading" id="weather-wind__value value">${Math.round(hour.windspeed)}km/h</span>
+                <span class="is-loading metric-km" id="weather-wind__value value">${Math.round(hour.windspeed)}km/h</span>
             </span>
             <!--  -->
             <span id="precipitation">

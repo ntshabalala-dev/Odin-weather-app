@@ -255,7 +255,7 @@ footer {
     flex-wrap: wrap;
     align-items: center;
     /* justify-content: center; */
-    margin-block: 1rem;
+    margin-block: .7rem;
     flex-direction: column;
     gap: 10px;
 }
