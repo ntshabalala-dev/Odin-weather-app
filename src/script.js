@@ -2,12 +2,15 @@ import "../src/main.css";
 import { setDateTime } from "./Helpers/getDateAndTime.js";
 import getIconMapping from "./Helpers/getIconMapping.js";
 import initDropDown from "./Modules/forecastDaysDropDown.js";
-import registerHamburgerMenuButtons from "./Modules/hamburgerMenu.js";
+import {
+    createCity, registerHamburgerMenuButtons
+} from "./Modules/hamburgerMenu.js";
 import {
     generateWeatherForecast,
     initSearchBar,
     initSearchForm,
 } from "./Modules/search.js";
+import initUnitConverter from "./Modules/unitConverter.js";
 
 async function onLoad() {
     setDateTime();
@@ -17,61 +20,15 @@ async function onLoad() {
     document.querySelectorAll(".is-loading").forEach((element) => {
         element.classList.toggle("is-loading");
     });
+
+    const currentLocations = JSON.parse(localStorage.getItem("locations")) || [];
+
+    if (currentLocations.length > 0) {
+        currentLocations.forEach((currentLocation) => {
+            createCity(currentLocation)
+        });
+    }
 }
-
-const tempSymbols = document.querySelector("#temperature-details #metric");
-
-tempSymbols.addEventListener("click", (e) => {
-    const target = e.target;
-    const selected = document.querySelector("#metric .selected");
-    if (
-        target.classList.contains("selected") ||
-        (target.id !== "fahrenheit" && target.id !== "celsius")
-    ) {
-        return;
-    }
-
-    selected.classList.remove("selected");
-    target.classList.add("selected");
-
-    if (target.id === "fahrenheit") {
-        const metricUnits = document.querySelectorAll(".metric-celcius");
-        const metricKms = document.querySelectorAll(".metric-km");
-
-        metricKms.forEach((metricKm) => {
-            const mKm = +metricKm.textContent.trim().split("k")[0];
-            metricKm.textContent = `${Math.round(mKm * 0.621371)}mi/h`;
-            metricKm.className = "imperial-mph";
-        });
-
-        metricUnits.forEach((metricUnit) => {
-            const c = +metricUnit.textContent.trim().split("°")[0];
-            const calc = Math.round(c * 1.8 + 32);
-
-            metricUnit.textContent =
-                metricUnit.id !== "value" ? `${calc}°` : `${calc}`;
-            metricUnit.className = "imperial-fahrenheit";
-        });
-    } else {
-        const imperialUnits = document.querySelectorAll(".imperial-fahrenheit");
-        const imperialMphs = document.querySelectorAll(".imperial-mph");
-
-        imperialMphs.forEach((imperialMph) => {
-            const iMph = +imperialMph.textContent.trim().split("m")[0];
-            imperialMph.textContent = `${Math.round(iMph * 1.609344)}km/h`;
-            imperialMph.className = "metric-km";
-        });
-
-        imperialUnits.forEach((imperialUnit) => {
-            const f = +imperialUnit.textContent.trim().split("°")[0];
-            const calc = Math.round(((f - 32) * 5) / 9);
-
-            imperialUnit.textContent =
-                imperialUnit.id !== "value" ? `${calc}°` : `${calc}`;
-            imperialUnit.className = "metric-celcius";
-        });
-    }
-});
 
 document.addEventListener("DOMContentLoaded", async () => {
     console.log(getIconMapping("partly-cloudy-day"));
@@ -83,4 +40,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     initSearchForm(".search-location-from");
     initSearchBar("#search-location__input");
     initDropDown("#hourly-forecast__days");
+    initUnitConverter();
 });

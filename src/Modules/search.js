@@ -113,19 +113,12 @@ export async function generateHourlyForecast(data, index = 0) {
 
         if (hoursFrom > "12:00") {
             const fromKey = +hoursFrom.split(":")[index];
-            let toKey = fromKey - 12;
             const from = hours.filter((hour) => {
                 return hour.datetime > `${fromKey}:00`;
             });
+            hours = [...from];
+            console.log(hours);
 
-            if (toKey < 10) {
-                toKey = `0${toKey}`;
-            }
-
-            const to = hours.filter((hour) => {
-                return hour.datetime < `${toKey}:00`;
-            });
-            hours = [...from, ...to];
         } else {
             hours = hours
                 .filter((hour) => {
@@ -187,6 +180,8 @@ export async function generateWeatherForecast(location) {
         } else {
             console.error(`Failed to generate weather forecaset: ${error.message}`);
         }
+        //throw new Error(error.message);
+
         return;
     }
 
@@ -200,9 +195,10 @@ export function initSearchForm(formSelector) {
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const searchTerm = searchInput.value
         setDateTime();
         //FE Validate here?
-        await generateWeatherForecast(searchInput.value);
+        await generateWeatherForecast(searchTerm);
 
         document.querySelectorAll(".is-loading").forEach((element) => {
             element.classList.remove("is-loading");
@@ -211,13 +207,18 @@ export function initSearchForm(formSelector) {
         const searchEvent = new CustomEvent('searchPerformed', {
             bubbles: true, // Allows the event to travel up the HTML tree
             detail: {
-                searchTerm: searchInput.value,
+                searchTerm: searchTerm,
                 timestamp: Date.now()
             }
         });
 
         //Dispatch event so that the latest weather Data gets sent to the forecastDaysDropDown.js module
         form.dispatchEvent(searchEvent);
+
+        const currentLocations = JSON.parse(localStorage.getItem('locations')) || [];
+        // 2. Push the new item
+        currentLocations.push(searchTerm);
+        localStorage.setItem('locations', JSON.stringify(currentLocations))
     });
 }
 

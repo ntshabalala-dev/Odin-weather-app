@@ -116,12 +116,17 @@ footer {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    /* Syntax: scrollbar-color: [thumb-color] [bg-color]; */
+    scrollbar-color: #6d6d78 #f4f4f4;
+    scrollbar-width: thin;
 }
 
 .nav-menu li a {
     display: block;
     padding-inline: 20px;
-    padding-bottom: 15px;
+    padding-block: 4px;
     color: #333;
     text-decoration: none;
     font-size: 18px;

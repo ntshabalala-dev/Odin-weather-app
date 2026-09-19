@@ -15,7 +15,23 @@ function toggleMenuState(e) {
     menuButton.setAttribute("aria-expanded", String(isActive));
 }
 
-export default function registerHamburgerMenuButtons(buttonSelectors) {
+function addCityToNavMenu() {
+    document.querySelector('main').addEventListener('searchPerformed', (event) => {
+        console.log(`Adding to Nav: ${event.detail.searchTerm}`);
+        createCity(event.detail.searchTerm)
+    });
+}
+
+export function createCity(location) {
+    const navMenu = document.querySelector('.nav-menu ul')
+    const li = document.createElement('li')
+    const anchor = document.createElement('a')
+    anchor.textContent = location;
+    li.appendChild(anchor)
+    navMenu.appendChild(li);
+}
+
+export function registerHamburgerMenuButtons(buttonSelectors) {
     buttonSelectors.forEach(buttonSelector => {
         menuButton = document.querySelector(buttonSelector);
 
@@ -29,4 +45,5 @@ export default function registerHamburgerMenuButtons(buttonSelectors) {
 
         menuButton.addEventListener('click', toggleMenuState)
     });
+    addCityToNavMenu();
 }
