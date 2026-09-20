@@ -1,3 +1,5 @@
+import deleteButtonSvg from "../Assets/clear.svg";
+
 let menuButton = null;
 let isActive = false;
 const navMenu = document.getElementById("nav-menu");
@@ -25,9 +27,14 @@ function addCityToNavMenu() {
 export function createCity(location) {
     const navMenu = document.querySelector('.nav-menu ul')
     const li = document.createElement('li')
+    li.id = 'nav-menu__location';
     const anchor = document.createElement('a')
+    const deleteButton = document.createElement('button')
+    deleteButton.type = 'button';
+    deleteButton.id = 'delete-location'
+    deleteButton.innerHTML = `<img id="delete-location-img" src="${deleteButtonSvg}" alt="delete location button">`
     anchor.textContent = location;
-    li.appendChild(anchor)
+    li.append(anchor, deleteButton)
     navMenu.appendChild(li);
 }
 
