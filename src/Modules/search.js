@@ -123,8 +123,7 @@ export async function generateHourlyForecast(data, index = 0) {
             hours = hours
                 .filter((hour) => {
                     return hour.datetime > hoursFrom;
-                })
-                .slice(0, 12);
+                });
         }
     }
 
