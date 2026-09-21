@@ -12,9 +12,8 @@ import fetchTimelineWeather from "../Service/weather.js";
 
 // import toastify
 
-// let searchButton = null;
-// protected functions?
 let searchInput = null;
+const loader = document.querySelector('.search .loader');
 
 async function generateWeatherForecastView(data) {
     // OVERVIEW
@@ -191,13 +190,18 @@ export function initSearchForm(formSelector) {
     // .search-location-from
     const form = document.querySelector(formSelector);
     searchInput = document.getElementById("search-location__input");
+    const searchButtonIcon = document.querySelector('#search-location__btn > img')
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const searchTerm = searchInput.value
+        let searchTerm = searchInput.value.trim();
+        searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
+
         setDateTime();
         //FE Validate here?
+        loader.classList.remove('hidden')
         await generateWeatherForecast(searchTerm);
+        loader.classList.add('hidden')
 
         document.querySelectorAll(".is-loading").forEach((element) => {
             element.classList.remove("is-loading");
@@ -211,13 +215,16 @@ export function initSearchForm(formSelector) {
             }
         });
 
-        //Dispatch event so that the latest weather Data gets sent to the forecastDaysDropDown.js module
-        form.dispatchEvent(searchEvent);
-
         const currentLocations = JSON.parse(localStorage.getItem('locations')) || [];
-        // 2. Push the new item
-        currentLocations.push(searchTerm);
-        localStorage.setItem('locations', JSON.stringify(currentLocations))
+
+        if (!currentLocations.includes(searchTerm)) {
+            // 2. Push the new item
+            currentLocations.push(searchTerm);
+            localStorage.setItem('locations', JSON.stringify(currentLocations))
+
+            //Dispatch event so that the latest weather Data gets sent to the forecastDaysDropDown.js module
+            form.dispatchEvent(searchEvent);
+        }
     });
 }
 

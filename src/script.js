@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await onLoad();
     document.querySelector("main").classList.remove("skeleton");
     // Register events
-    registerHamburgerMenuButtons(["#nav-menu__close", "#hamburger-btn"]);
+    registerHamburgerMenuButtons(["#nav-menu__close-button", "#hamburger-btn"]);
     initSearchForm(".search-location-from");
     initSearchBar("#search-location__input");
     initDropDown("#hourly-forecast__days");

@@ -8,6 +8,7 @@ let menuButton = null;
 let isActive = false;
 let navMenu = null;
 const handleNavFocusOut = (event) => navFocusOut(event);
+const loader = document.querySelector('#nav-menu__close .loader.hidden')
 
 function toggleMenuState() {
     isActive = !isActive;
@@ -53,13 +54,17 @@ export function createCity(location) {
     navMenuContainer.appendChild(li);
 
     anchor.addEventListener('click', async () => {
-        await generateWeatherForecast(location);
         setDateTime();
+
+        loader.classList.remove('hidden')
+        await generateWeatherForecast(location);
+        loader.classList.add('hidden')
+
 
         document.querySelectorAll(".is-loading").forEach((element) => {
             element.classList.toggle("is-loading");
         });
-        closeMenu();
+        //closeMenu();
     })
 
     deleteButton.addEventListener('click', () => {

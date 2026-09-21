@@ -18,7 +18,12 @@
 
         <!-- The Navigation Menu -->
         <nav class="nav-menu" id="nav-menu">
-            <span id="nav-menu__close">BACK</span>
+            <div id="nav-menu__close">
+                <span id="nav-menu__close-button">
+                    <img src="./Assets/chevrons-left.svg" alt="close nav-menu button">
+                </span>
+                <span class="loader hidden"></span>
+            </div>
             <span id="nav-menu__heading">RECENT LOCATIONS</span>
             <ul>
             </ul>
@@ -35,9 +40,7 @@
                     <button id="search-location__btn" type="submit"><img src="./Assets/search.svg" alt=""></button>
                 </div>
             </form>
-            <div class="search__location-refresh">
-                <img src="./Assets/refresh.svg" alt="">
-            </div>
+            <span class="loader"></span>
         </div>
 
         <div class="weather-overview-container">
