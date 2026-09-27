@@ -13,7 +13,8 @@ import fetchTimelineWeather from "../Service/weather.js";
 // import toastify
 
 let searchInput = null;
-const loader = document.querySelector('.search .loader');
+const loader = document.createElement('span');
+loader.className = 'loader';
 
 async function generateWeatherForecastView(data) {
     // OVERVIEW
@@ -199,9 +200,9 @@ export function initSearchForm(formSelector) {
 
         setDateTime();
         //FE Validate here?
-        loader.classList.remove('hidden')
+        searchButtonIcon.replaceWith(loader);
         await generateWeatherForecast(searchTerm);
-        loader.classList.add('hidden')
+        loader.replaceWith(searchButtonIcon)
 
         document.querySelectorAll(".is-loading").forEach((element) => {
             element.classList.remove("is-loading");

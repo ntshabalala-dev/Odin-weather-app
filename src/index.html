@@ -16,6 +16,10 @@
             <div class="bar"></div>
         </button>
 
+        <span class="header__logo">
+            <img src="./Assets/logo.svg" alt="">
+        </span>
+
         <!-- The Navigation Menu -->
         <nav class="nav-menu" id="nav-menu">
             <div id="nav-menu__close">
@@ -37,10 +41,11 @@
                     <input id="search-location__input" required type="text" placeholder="Search City or Zip Code">
                     <button type="button" id="clear-button"><img id="clear-button-img" src="./Assets/clear.svg"
                             alt=""></button>
-                    <button id="search-location__btn" type="submit"><img src="./Assets/search.svg" alt=""></button>
+                    <button id="search-location__btn" type="submit">
+                        <img src="./Assets/search.svg" alt="">
+                    </button>
                 </div>
             </form>
-            <span class="loader"></span>
         </div>
 
         <div class="weather-overview-container">
@@ -57,9 +62,9 @@
                     </div>
                     <div id="temperature-details">
                         <span id="metric">
-                            <span id="celsius" class="selected">&deg;C</span>
+                            <span id="celsius" class="selected"><span class="symbol">&deg;</span>C</span>
                             <span id="vertical-seperator">&#124;</span>
-                            <span id="fahrenheit">&deg;F</span>
+                            <span id="fahrenheit"><span class="symbol">&deg;</span>F</span>
                         </span>
                     </div>
                 </div>
