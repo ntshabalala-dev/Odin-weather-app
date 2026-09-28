@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import Toastify from "toastify-js";
 import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import {
@@ -9,12 +10,13 @@ import {
     loadHourlyDynamicImage,
 } from "../Helpers/loadAssets.js";
 import fetchTimelineWeather from "../Service/weather.js";
+import "toastify-js/src/toastify.css";
 
 // import toastify
 
 let searchInput = null;
-const loader = document.createElement('span');
-loader.className = 'loader';
+const loader = document.createElement("span");
+loader.className = "loader";
 
 async function generateWeatherForecastView(data) {
     // OVERVIEW
@@ -38,7 +40,7 @@ async function generateWeatherForecastView(data) {
     );
 
     // 7 DAY FORECAST
-    await generateSevenDayForecast(data)
+    await generateSevenDayForecast(data);
 
     // HOURLY FORECAST
     generateHourlyForecastDays(data);
@@ -118,12 +120,10 @@ export async function generateHourlyForecast(data, index = 0) {
             });
             hours = [...from];
             console.log(hours);
-
         } else {
-            hours = hours
-                .filter((hour) => {
-                    return hour.datetime > hoursFrom;
-                });
+            hours = hours.filter((hour) => {
+                return hour.datetime > hoursFrom;
+            });
         }
     }
 
@@ -173,15 +173,16 @@ export async function generateWeatherForecast(location) {
         const data = await fetchTimelineWeather(location);
         await generateWeatherForecastView(data);
     } catch (error) {
-        const errorMessage = error.message.split(":").at(-1);
+        let errorMessage = error.message.split(":").at(-1);
+
         if (errorMessage) {
             console.error(errorMessage);
         } else {
             console.error(`Failed to generate weather forecaset: ${error.message}`);
+            errorMessage = error.message;
         }
-        //throw new Error(error.message);
 
-        return;
+        throw new Error(errorMessage);
     }
 
     console.log("2nd");
@@ -190,14 +191,14 @@ export async function generateWeatherForecast(location) {
 function validateForm() {
     if (searchInput.validity.valueMissing) {
         searchInput.setCustomValidity("City name required!");
-        searchInput.reportValidity();   // ← shows the bubble now
-        return false;                  // ← signals "invalid"
+        searchInput.reportValidity(); // ← shows the bubble now
+        return false; // ← signals "invalid"
     }
 
     if (searchInput.value.length > 30) {
         searchInput.setCustomValidity("The city name is too long!");
-        searchInput.reportValidity();   // ← shows the bubble now
-        return false;                  // ← signals "invalid"
+        searchInput.reportValidity(); // ← shows the bubble now
+        return false; // ← signals "invalid"
     }
 
     return true;
@@ -207,7 +208,9 @@ export function initSearchForm(formSelector) {
     // .search-location-from
     const form = document.querySelector(formSelector);
     searchInput = document.getElementById("search-location__input");
-    const searchButtonIcon = document.querySelector('#search-location__btn > img')
+    const searchButtonIcon = document.querySelector(
+        "#search-location__btn > img",
+    );
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -217,32 +220,49 @@ export function initSearchForm(formSelector) {
         }
 
         let searchTerm = searchInput.value.trim();
-        searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
+        searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
 
         setDateTime();
-        //FE Validate here?
-        searchButtonIcon.replaceWith(loader);
-        await generateWeatherForecast(searchTerm);
-        loader.replaceWith(searchButtonIcon)
+
+        try {
+            searchButtonIcon.replaceWith(loader);
+            await generateWeatherForecast(searchTerm);
+            loader.replaceWith(searchButtonIcon);
+        } catch (error) {
+            Toastify({
+                text: `⚠️ ${error.message}`,
+                duration: -1,
+                close: true,
+                gravity: "top",
+                position: "right",
+                style: {
+                    // Red alert styling configurations
+                    background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                }
+            }).showToast();
+            loader.replaceWith(searchButtonIcon);
+            return;
+        }
 
         document.querySelectorAll(".is-loading").forEach((element) => {
             element.classList.remove("is-loading");
         });
 
-        const searchEvent = new CustomEvent('searchPerformed', {
+        const searchEvent = new CustomEvent("searchPerformed", {
             bubbles: true, // Allows the event to travel up the HTML tree
             detail: {
                 searchTerm: searchTerm,
-                timestamp: Date.now()
-            }
+                timestamp: Date.now(),
+            },
         });
 
-        const currentLocations = JSON.parse(localStorage.getItem('locations')) || [];
+        const currentLocations =
+            JSON.parse(localStorage.getItem("locations")) || [];
 
         if (!currentLocations.includes(searchTerm)) {
             // 2. Push the new item
             currentLocations.push(searchTerm);
-            localStorage.setItem('locations', JSON.stringify(currentLocations))
+            localStorage.setItem("locations", JSON.stringify(currentLocations));
 
             //Dispatch event so that the latest weather Data gets sent to the forecastDaysDropDown.js module
             form.dispatchEvent(searchEvent);
