@@ -187,6 +187,22 @@ export async function generateWeatherForecast(location) {
     console.log("2nd");
 }
 
+function validateForm() {
+    if (searchInput.validity.valueMissing) {
+        searchInput.setCustomValidity("City name required!");
+        searchInput.reportValidity();   // ← shows the bubble now
+        return false;                  // ← signals "invalid"
+    }
+
+    if (searchInput.value.length > 30) {
+        searchInput.setCustomValidity("The city name is too long!");
+        searchInput.reportValidity();   // ← shows the bubble now
+        return false;                  // ← signals "invalid"
+    }
+
+    return true;
+}
+
 export function initSearchForm(formSelector) {
     // .search-location-from
     const form = document.querySelector(formSelector);
@@ -195,6 +211,11 @@ export function initSearchForm(formSelector) {
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         let searchTerm = searchInput.value.trim();
         searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
 
