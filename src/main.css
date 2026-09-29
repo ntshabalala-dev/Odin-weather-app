@@ -991,3 +991,20 @@ input:-webkit-autofill:focus {
         display: none
     }
 }
+
+@media (max-width: 480px) {
+
+    /* Give the container some breathing room from the edge of the mobile screen */
+    .toastify {
+        width: 100%;
+        /* Adjust spacing away from mobile bottom navigation bars */
+    }
+
+    /* Style individual toast cards for mobile */
+    .Toastify__toast {
+        margin-bottom: 8px;
+        border-radius: 8px;
+        /* Gives a more modern app feel */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}

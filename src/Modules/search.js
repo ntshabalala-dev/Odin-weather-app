@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import Toastify from "toastify-js";
 import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import {
@@ -9,8 +8,8 @@ import {
     loadForecastWeatherIcon,
     loadHourlyDynamicImage,
 } from "../Helpers/loadAssets.js";
+import showErrorToast from "../Helpers/Toast.js";
 import fetchTimelineWeather from "../Service/weather.js";
-import "toastify-js/src/toastify.css";
 
 // import toastify
 
@@ -229,17 +228,7 @@ export function initSearchForm(formSelector) {
             await generateWeatherForecast(searchTerm);
             loader.replaceWith(searchButtonIcon);
         } catch (error) {
-            Toastify({
-                text: `⚠️ ${error.message}`,
-                duration: -1,
-                close: true,
-                gravity: "top",
-                position: "right",
-                style: {
-                    // Red alert styling configurations
-                    background: "linear-gradient(to right, #ff5f6d, #ffc371)",
-                }
-            }).showToast();
+            showErrorToast(error.message);
             loader.replaceWith(searchButtonIcon);
             return;
         }

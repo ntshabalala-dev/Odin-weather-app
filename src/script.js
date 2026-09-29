@@ -15,7 +15,13 @@ import initUnitConverter from "./Modules/unitConverter.js";
 async function onLoad() {
     setDateTime();
 
-    await generateWeatherForecast("Klerksdorp");
+    try {
+        await generateWeatherForecast("Klerksdorp");
+    } catch (error) {
+        showErrorToast(error.message);
+        return;
+    }
+
 
     document.querySelectorAll(".is-loading").forEach((element) => {
         element.classList.toggle("is-loading");
