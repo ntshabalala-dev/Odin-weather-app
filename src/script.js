@@ -11,12 +11,13 @@ import {
     initSearchForm,
 } from "./Modules/search.js";
 import initUnitConverter from "./Modules/unitConverter.js";
+import getUserCity from "./Service/ipInfo.js";
 
 async function onLoad() {
     setDateTime();
-
     try {
-        await generateWeatherForecast("Klerksdorp");
+        const userCity = await getUserCity();
+        await generateWeatherForecast(userCity);
     } catch (error) {
         showErrorToast(error.message);
         return;
