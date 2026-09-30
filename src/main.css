@@ -75,6 +75,7 @@ footer {
     align-items: center;
     padding: 1rem 2rem;
     color: #fff;
+    text-align: center;
 }
 
 /* ##00 - HAMBURGER MENU */
@@ -222,6 +223,7 @@ footer {
 /* ##01 - SEARCH */
 
 #search {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -243,18 +245,49 @@ footer {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
 }
 
+.search__cities {
+    position: absolute;
+    top: 51px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 10px;
+    background-color: #f4f4f4;
+    color: #333;
+    z-index: 999;
+    /* visibility: hidden; */
+}
+
+.search__cities .cities__container:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+.search__cities .cities__container .city {
+    cursor: pointer;
+    padding-block: 4px;
+}
+
+.search__cities .cities__container:hover {
+    background-color: #ddd;
+    /* Color change when hovering */
+}
+
+.search__cities .cities__container {
+    border-bottom: 1px solid #cccccc76;
+}
+
+
+
 #search-location__input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.2rem 0.5rem;
     font-size: 1rem;
     outline: none;
     border: none;
     background-color: transparent;
-    height: 1.4rem;
 }
 
 #search-location__btn {
-    padding: .6rem .8rem;
+    padding: .5rem .6rem;
     font-size: 1rem;
     background-color: #ff6537;
     color: #fff;
@@ -277,7 +310,7 @@ footer {
 }
 
 #search-location__btn img {
-    width: 28px;
+    width: 26px;
     height: auto;
 }
 
@@ -330,7 +363,7 @@ footer {
 
 .search .loader {
     display: inline-block;
-    width: 28px;
+    width: 26px;
     aspect-ratio: 1;
     border-radius: 50%;
     border: 4px solid #0000;
@@ -384,6 +417,10 @@ footer {
     align-items: center;
     font-size: 1.2rem;
     font-weight: 700;
+}
+
+#location__date-time {
+    text-align: center;
 }
 
 /* ##03 - WEATHER OVERVIEW */
@@ -981,6 +1018,14 @@ input:-webkit-autofill:focus {
         margin-right: 3px;
     }
 
+    .search__cities {
+        max-width: 80%;
+        top: 49px;
+    }
+
+    .search-location-from {
+        max-width: 80%;
+    }
 }
 
 @media (max-width:375px) {
@@ -989,6 +1034,26 @@ input:-webkit-autofill:focus {
     .hourly-forecast__card #wind,
     .hourly-forecast__card #feels-like {
         display: none
+    }
+
+    .weather-icon .lightrain,
+    .weather-icon .cloudy,
+    .weather-icon .partlycloudy,
+    .weather-icon .sunny {
+        width: 185px;
+        height: auto;
+    }
+
+    #temperature-amount {
+        font-size: 7.8rem;
+    }
+
+    #location__name {
+        /* font-size: 3.5rem; */
+    }
+
+    #weather-extra-details {
+        font-size: 1.3rem;
     }
 }
 
