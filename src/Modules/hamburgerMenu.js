@@ -11,13 +11,25 @@ const loader = document.querySelector("#nav-menu__close .loader.hidden");
 
 function toggleMenuState() {
     isActive = !isActive;
+    const body = document.querySelector("body");
+    const isMobile = window.innerWidth <= 425;
     if (isActive) {
         navMenu.classList.toggle("active", isActive);
         document.addEventListener("click", handleNavFocusOut);
+
+        console.log(isMobile);
+
+
+        if (isMobile) {
+            body.style.left = "50vw";
+        }
     } else {
         document.removeEventListener("click", handleNavFocusOut);
         navMenu.classList.remove("active");
         isActive = false;
+        if (isMobile) {
+            body.style.left = "0vw";
+        }
     }
 
     menuButton.setAttribute("aria-expanded", String(isActive));
