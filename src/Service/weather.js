@@ -1,4 +1,4 @@
-export default async function fetchTimelineWeather(location) {
+export async function fetchTimelineWeather(location) {
     // Visual Crossing Timeline Weather API example
     // Fetches timeline data for a location using metric units, with output in JSON format
     // Filters for windspeed, description, and icon weather elements
@@ -45,6 +45,31 @@ export default async function fetchTimelineWeather(location) {
         return data;
     } catch (err) {
         console.error("Error fetching weather data:", err);
+        throw err;
+    }
+}
+
+export async function fetchCities(searchTerm) {
+    const API_KEY = "20bd0b8a9bda4c3a9a332633260210";
+    const baseUrl = `https://api.weatherapi.com/v1/search.json`;
+
+    const params = new URLSearchParams({
+        key: API_KEY,
+        q: searchTerm,
+    });
+
+    const url = `${baseUrl}?${params.toString()}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(
+                `Cities API request failed (${response.status}): ${await response.text()}`
+            );
+        }
+        const data = await response.json();
+        return data;
+    } catch (err) {
         throw err;
     }
 }

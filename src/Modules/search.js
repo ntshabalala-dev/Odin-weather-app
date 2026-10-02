@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 import { getDayOfTheWeek, setDateTime } from "../Helpers/getDateAndTime.js";
 import getIconMapping from "../Helpers/getIconMapping.js";
 import {
@@ -9,11 +10,14 @@ import {
     loadHourlyDynamicImage,
 } from "../Helpers/loadAssets.js";
 import showErrorToast from "../Helpers/Toast.js";
-import fetchTimelineWeather from "../Service/weather.js";
+import { fetchCities, fetchTimelineWeather } from "../Service/weather.js";
 
 // import toastify
 
-let searchInput = null;
+let form;
+let searchInput;
+let citiesDropDown;
+let debounceTimeout = null;
 const loader = document.createElement("span");
 loader.className = "loader";
 
@@ -203,9 +207,46 @@ function validateForm() {
     return true;
 }
 
+async function handleSearchInputChange(searchInput) {
+    clearTimeout(debounceTimeout);
+    // settimeout returns a timeoutID, which can be used to clear the timeout before it executes. This is useful for debouncing, where you want to delay the execution of a function until a certain amount of time has passed since the last time it was invoked.
+    debounceTimeout = setTimeout(async () => {
+        try {
+            const cities = await fetchCities(searchInput.trim());
+            console.log("Cities data:", cities);
+            citiesDropDown.textContent = "";
+
+            if (cities.length <= 0) {
+                createCityRow();
+                citiesDropDown.style.visibility = "visible";
+                return;
+            }
+
+            cities.splice(5);
+            cities.forEach(city => {
+                createCityRow(city);
+            });
+            citiesDropDown.style.visibility = "visible";
+        } catch (error) {
+            console.error("Error fetching cities:", error);
+            return null;
+        }
+    }, 300); // Adjust the delay as needed
+}
+
+function createCityRow(city = null) {
+    const cityRow = document.createElement("div");
+    const cityName = document.createElement("p");
+    cityName.className = 'city-name';
+    cityRow.className = "cities__container";
+    cityName.textContent = city ? city.name : 'Not found';
+    cityRow.appendChild(cityName);
+    citiesDropDown.appendChild(cityRow);
+}
+
 export function initSearchForm(formSelector) {
     // .search-location-from
-    const form = document.querySelector(formSelector);
+    form = document.querySelector(formSelector);
     searchInput = document.getElementById("search-location__input");
     const searchButtonIcon = document.querySelector(
         "#search-location__btn > img",
@@ -222,6 +263,10 @@ export function initSearchForm(formSelector) {
         searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
 
         setDateTime();
+
+        if (citiesDropDown.style.visibility === 'visible') {
+            citiesDropDown.style.visibility = 'hidden'
+        }
 
         try {
             searchButtonIcon.replaceWith(loader);
@@ -262,17 +307,37 @@ export function initSearchForm(formSelector) {
 export function initSearchBar(inputSelector) {
     const searchBar = document.querySelector(inputSelector);
     const clearButton = document.querySelector("#clear-button-img");
+    const locationDropDown = document.querySelector(".search__cities");
+    citiesDropDown = document.querySelector(".search__cities");
 
-    searchBar.addEventListener("input", () => {
+    searchBar.addEventListener("input", async () => {
         if (searchBar.value.length > 0) {
             clearButton.style.visibility = "visible";
+            if (searchBar.value.length > 3) {
+                await handleSearchInputChange(searchBar.value);
+            } else {
+                citiesDropDown.style.visibility = "hidden";
+            }
         } else {
             clearButton.style.visibility = "hidden";
+            citiesDropDown.style.visibility = "hidden";
+        }
+    });
+
+    locationDropDown.addEventListener("click", async (event) => {
+        const clickedElement = event.target;
+
+        if (clickedElement.classList.contains("city-name")) {
+            const selectedCity = clickedElement.textContent;
+            searchBar.value = selectedCity;
+            citiesDropDown.style.visibility = "hidden";
+            form.requestSubmit(); // Trigger the form submission
         }
     });
 
     clearButton.addEventListener("click", () => {
         searchBar.value = "";
         clearButton.style.visibility = "hidden";
+        citiesDropDown.style.visibility = "hidden"
     });
 }
