@@ -82,6 +82,13 @@ footer {
     text-align: center;
 }
 
+.footer__allrights {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 /* ##00 - HAMBURGER MENU */
 
 .hamburger {
@@ -1046,6 +1053,10 @@ input:-webkit-autofill:focus {
         max-width: 400px;
         white-space: wrap;
         text-align: center;
+    }
+
+    .footer__allrights {
+        flex-direction: row;
     }
 }
 
