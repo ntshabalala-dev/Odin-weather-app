@@ -10,7 +10,7 @@ import {
     initSearchBar,
     initSearchForm,
 } from "./Modules/search.js";
-import initUnitConverter from "./Modules/unitConverter.js";
+import { initUnitConverter } from "./Modules/unitConverter.js";
 import getUserCity from "./Service/ipInfo.js";
 
 async function onLoad() {

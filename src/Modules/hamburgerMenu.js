@@ -2,6 +2,7 @@ import deleteButtonSvg from "../Assets/clear.svg";
 import { setDateTime } from "../Helpers/getDateAndTime.js";
 import showErrorToast from "../Helpers/Toast.js";
 import { generateWeatherForecast } from "../Modules/search.js";
+import { convertToCelcius } from "./unitConverter.js";
 
 let menuButton = null;
 let isActive = false;
@@ -73,6 +74,7 @@ export function createCity(location) {
             loader.classList.remove("hidden");
             await generateWeatherForecast(location);
             loader.classList.add("hidden");
+            convertToCelcius();
         } catch (error) {
             loader.classList.add("hidden");
             showErrorToast(error.message)

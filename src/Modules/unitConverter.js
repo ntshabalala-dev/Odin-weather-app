@@ -1,4 +1,4 @@
-export default function initUnitConverter() {
+export function initUnitConverter() {
     const tempSymbols = document.querySelector("#temperature-details #metric");
 
     tempSymbols.addEventListener("click", (e) => {
@@ -50,6 +50,25 @@ export default function initUnitConverter() {
                     imperialUnit.id !== "value" ? `${calc}°` : `${calc}`;
                 imperialUnit.className = "metric-celcius";
             });
+
         }
     });
+}
+
+export function convertToCelcius() {
+    const imperialUnits = document.querySelectorAll(".imperial-fahrenheit");
+    const imperialMphs = document.querySelectorAll(".imperial-mph");
+    const selected = document.querySelector("#metric .selected");
+    const metricSymbol = document.querySelector("#metric #celsius");
+
+    imperialMphs.forEach((imperialMph) => {
+        imperialMph.className = "metric-km";
+    });
+
+    imperialUnits.forEach((imperialUnit) => {
+        imperialUnit.className = "metric-celcius";
+    });
+
+    selected.classList.remove("selected");
+    metricSymbol.classList.add("selected");
 }

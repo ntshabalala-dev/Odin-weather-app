@@ -133,7 +133,7 @@ footer {
     /* Makes the slide-in look smooth */
     display: flex;
     flex-direction: column;
-    padding-top: 2.2rem;
+    padding-top: 1.3rem;
 }
 
 .nav-menu ul {
@@ -743,6 +743,10 @@ footer {
     display: none;
 }
 
+#weather-wind__value {
+    display: none;
+}
+
 .temperature #max {
     font-weight: 700;
 }
@@ -1058,6 +1062,10 @@ input:-webkit-autofill:focus {
     .footer__allrights {
         flex-direction: row;
     }
+
+    #weather-wind__value {
+        display: inline-block;
+    }
 }
 
 @media (max-width:375px) {
@@ -1103,5 +1111,14 @@ input:-webkit-autofill:focus {
         border-radius: 8px;
         /* Gives a more modern app feel */
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+@media (max-width:390px) {
+
+    /* Extra SMALL MOBILE */
+    .hourly-forecast__card .icon,
+    .hourly-forecast__card .temperature {
+        margin-left: 5px;
     }
 }

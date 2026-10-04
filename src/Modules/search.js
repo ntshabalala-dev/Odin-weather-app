@@ -154,7 +154,7 @@ export async function generateHourlyForecast(data, index = 0) {
             <!--  -->
             <span id="wind">
                 <img src="" alt="">
-                <span class="is-loading metric-km" id="weather-wind__value value">${Math.round(hour.windspeed)}km/h</span>
+                <span class="is-loading metric-km" id="weather-wind__value">${Math.round(hour.windspeed)}km/h</span>
             </span>
             <!--  -->
             <span id="precipitation">
