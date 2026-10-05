@@ -6,13 +6,6 @@
     box-sizing: border-box;
 }
 
-/* 
-    TO CREATE MOVE THE BODY WHEN THE NAVIGATION MENU IS OPENED, UNCOMMENT THE FOLLOWING LINES:
-
-    position: relative;
-    left: 50vw; 
-    
-    */
 body {
     position: relative;
     transition: 0.3s ease;
@@ -97,6 +90,7 @@ footer {
 
     width: 50vw;
     height: 100vh;
+    height: 100dvh;
     /* Full screen height */
     background-color: #f4f4f4;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
@@ -113,9 +107,8 @@ footer {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 200px;
+    max-height: 400px;
     overflow-y: auto;
-    /* Syntax: scrollbar-color: [thumb-color] [bg-color]; */
     scrollbar-color: #6d6d78 #f4f4f4;
     scrollbar-width: thin;
 }
@@ -267,8 +260,6 @@ footer {
     border-bottom: 1px solid #cccccc76;
 }
 
-
-
 #search-location__input {
     width: 100%;
     padding: 0.2rem 0.5rem;
@@ -310,7 +301,6 @@ footer {
     visibility: hidden;
 }
 
-
 .search .loader.hidden {
     display: none;
 }
@@ -319,7 +309,6 @@ footer {
     visibility: hidden;
 }
 
-/* HTML: <div class="loader"></div> */
 #nav-menu__close .loader {
     width: 30px;
     aspect-ratio: 1;
@@ -397,7 +386,6 @@ footer {
 }
 
 #location {
-    /* possibly add gap to parent div */
     margin-block: 1rem;
     display: flex;
     flex-direction: column;
@@ -430,7 +418,6 @@ footer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    /* justify-content: center; */
     margin-block: .7rem;
     flex-direction: column;
     gap: 10px;
@@ -440,7 +427,6 @@ footer {
     display: flex;
     gap: 4px;
     align-items: last baseline;
-    /* padding-block: 2rem; */
     padding-top: 2rem;
     padding-bottom: 1rem;
 }
@@ -486,10 +472,7 @@ footer {
     font-size: 1.4rem;
     font-weight: 700;
     text-transform: capitalize;
-
-    /* change on large screens! */
     max-width: 200px;
-    /* 2. Sets a limit where the text should cut off */
     white-space: wrap;
 }
 
@@ -529,7 +512,6 @@ footer {
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
 }
 
 #weather-forecast__heading {
@@ -552,7 +534,6 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
     padding: 10px 0px;
     background-color: #24253e34;
     border-radius: 8px;
@@ -662,7 +643,6 @@ footer {
 
 #hourly-forecast__header {
     display: flex;
-    /* padding-bottom: px; */
     justify-content: space-between;
 }
 
@@ -671,7 +651,6 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* font-size: 1.1; */
 }
 
 .hourly-forecast__card {
@@ -679,9 +658,7 @@ footer {
     padding: 12px 9px;
     display: flex;
     align-items: center;
-    /* background-color: #25253d43; */
     border-bottom: 1px solid #cccccc21;
-    /* border-radius: 8PX; */
     justify-content: space-between;
 }
 
@@ -730,8 +707,6 @@ footer {
     background-color: #ffffff;
     color: #333333;
 }
-
-
 
 #hourly-forecast__body>div:last-of-type>.hourly-forecast__card {
     border-bottom: none

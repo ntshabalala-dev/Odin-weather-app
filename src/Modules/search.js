@@ -29,6 +29,14 @@ async function generateWeatherForecastView(data) {
         "#weather-extra-details #description",
     );
 
+    if (data.address.length > 11 && screen.width <= 500) {
+        locationName.style.fontSize = "3rem";
+    } else if (data.address.length > 11) {
+        locationName.style.fontSize = "3.5rem";
+    } else {
+        locationName.style.fontSize = "3.7rem";
+    }
+
     // Air conditions
     const locationFeelsLike = document.querySelector("#feels-like__value");
 
@@ -187,8 +195,6 @@ export async function generateWeatherForecast(location) {
 
         throw new Error(errorMessage);
     }
-
-    console.log("2nd");
 }
 
 function validateForm() {

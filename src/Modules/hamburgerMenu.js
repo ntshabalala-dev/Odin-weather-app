@@ -13,22 +13,20 @@ const loader = document.querySelector("#nav-menu__close .loader.hidden");
 function toggleMenuState() {
     isActive = !isActive;
     const body = document.querySelector("body");
-    const isMobile = window.innerWidth <= 425;
+    const isMobile = screen.width <= 500;
     if (isActive) {
         navMenu.classList.toggle("active", isActive);
         document.addEventListener("click", handleNavFocusOut);
-
-        console.log(isMobile);
-
-
         if (isMobile) {
             body.style.left = "50vw";
+            navMenu.style.height = "100%";
         }
     } else {
         document.removeEventListener("click", handleNavFocusOut);
         navMenu.classList.remove("active");
         isActive = false;
         body.style.left = "0vw";
+        navMenu.style.height = "100vh";
     }
 
     menuButton.setAttribute("aria-expanded", String(isActive));
