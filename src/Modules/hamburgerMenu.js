@@ -28,9 +28,7 @@ function toggleMenuState() {
         document.removeEventListener("click", handleNavFocusOut);
         navMenu.classList.remove("active");
         isActive = false;
-        if (isMobile) {
-            body.style.left = "0vw";
-        }
+        body.style.left = "0vw";
     }
 
     menuButton.setAttribute("aria-expanded", String(isActive));
