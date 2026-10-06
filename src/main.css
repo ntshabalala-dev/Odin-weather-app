@@ -93,9 +93,9 @@ footer {
     top: 0;
     /* Hides the menu completely off the left side */
     /* SET TO 0 TO MAKE VISIBLE, -50vw TO HIDE */
-    left: -50vw;
+    left: -60vw;
 
-    width: 50vw;
+    width: 60vw;
     height: 100vh;
     height: 100dvh;
     /* Full screen height */
