@@ -17,8 +17,10 @@ function toggleMenuState() {
     if (isActive) {
         navMenu.classList.toggle("active", isActive);
         document.addEventListener("click", handleNavFocusOut);
-        if (isMobile) {
-            body.style.left = "50vw";
+        if (!isMobile) {
+            body.style.left = "25vw";
+            document.documentElement.classList.add("nav-open");
+            body.classList.add("nav-open");
             navMenu.style.height = "100%";
         }
     } else {
@@ -26,6 +28,8 @@ function toggleMenuState() {
         navMenu.classList.remove("active");
         isActive = false;
         body.style.left = "0vw";
+        document.documentElement.classList.remove("nav-open");
+        body.classList.remove("nav-open");
         navMenu.style.height = "100vh";
     }
 
@@ -43,10 +47,14 @@ function addCityToNavMenu() {
 
 function closeMenu() {
     if (!isActive) return;
+    const body = document.querySelector("body");
     navMenu.classList.remove("active");
     isActive = false;
     menuButton.setAttribute("aria-expanded", String(isActive));
     document.removeEventListener("click", handleNavFocusOut);
+    body.style.left = "0vw";
+    document.documentElement.classList.remove("nav-open");
+    body.classList.remove("nav-open");
 }
 
 export function createCity(location) {

@@ -3,7 +3,8 @@ import { setDateTime } from "./Helpers/getDateAndTime.js";
 import getIconMapping from "./Helpers/getIconMapping.js";
 import initDropDown from "./Modules/forecastDaysDropDown.js";
 import {
-    createCity, registerHamburgerMenuButtons
+    createCity,
+    registerHamburgerMenuButtons,
 } from "./Modules/hamburgerMenu.js";
 import {
     generateWeatherForecast,
@@ -23,7 +24,6 @@ async function onLoad() {
         return;
     }
 
-
     document.querySelectorAll(".is-loading").forEach((element) => {
         element.classList.toggle("is-loading");
     });
@@ -32,7 +32,7 @@ async function onLoad() {
 
     if (currentLocations.length > 0) {
         currentLocations.forEach((currentLocation) => {
-            createCity(currentLocation)
+            createCity(currentLocation);
         });
     }
 }

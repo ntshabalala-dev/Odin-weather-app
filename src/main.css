@@ -6,6 +6,13 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+    /* Preferred over 'hidden' to prevent vertical scrolling bugs */
+}
+
 body {
     position: relative;
     transition: 0.3s ease;
@@ -847,7 +854,7 @@ input:-webkit-autofill:focus {
     .nav-menu {
         left: -25vw;
         width: 25vw;
-        padding-top: 1.6rem;
+        padding-top: 1.3rem;
     }
 
     .bar {
